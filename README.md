@@ -1,2 +1,3 @@
-# types
-openui5 types
+# Open UI5 Types
+
+Open UI5 Types

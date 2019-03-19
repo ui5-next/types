@@ -1,0 +1,51 @@
+{
+  "name": "@ui5-next/types",
+  "version": "1.0.0",
+  "description": "openui5 types",
+  "main": "bin",
+  "scripts": {
+    "test": "jest",
+    "test:cov": "jest && codecov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ui5-next/types.git"
+  },
+  "author": "Theo Sun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ui5-next/types/issues"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "builder/.*?__tests__/.*\\.ts$",
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "testconfig.js",
+      "package.json",
+      "package-lock.json",
+      "tsconfig.json"
+    ]
+  },
+  "homepage": "https://github.com/ui5-next/types#readme",
+  "devDependencies": {
+    "@types/handlebars": "^4.1.0",
+    "@types/jest": "^24.0.11",
+    "@types/lodash": "^4.14.123",
+    "@types/node": "^11.11.3",
+    "handlebars": "^4.1.1",
+    "jest": "^24.1.0",
+    "lodash": "^4.17.11",
+    "ts-jest": "^24.0.0",
+    "ts-loader": "4",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.6.0",
+    "tslint-loader": "^3.5.3",
+    "turndown": "^5.0.3",
+    "typescript": "^3.3.3333"
+  }
+}

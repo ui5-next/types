@@ -1,0 +1,14 @@
+{
+  "linterOptions": {
+    "exclude": [
+      "./builder/templates/*.ts"
+    ]
+  },
+  "rules": {
+    "quotes": [
+      2,
+      "backtick",
+      "single"
+    ]
+  }
+}

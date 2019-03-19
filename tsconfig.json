@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "newLine": "LF",
+        "charset": "UTF-8"
+    },
+    "exclude": [
+        "./builder/templates/*.ts"
+    ]
+}

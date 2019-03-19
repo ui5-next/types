@@ -1,0 +1,245 @@
+{
+  "kind": "class",
+  "name": "sap.ui.core.mvc.JSView",
+  "basename": "JSView",
+  "resource": "sap/ui/core/mvc/JSView.js",
+  "module": "sap/ui/core/mvc/JSView",
+  "export": "",
+  "static": true,
+  "visibility": "public",
+  "extends": "sap.ui.core.mvc.View",
+  "description": "<p>A View defined/constructed by JavaScript code.</p>",
+  "ui5-metamodel": true,
+  "ui5-metadata": {
+    "stereotype": "control"
+  },
+  "constructor": {
+    "visibility": "public",
+    "parameters": [
+      {
+        "name": "sId",
+        "optional": true,
+        "description": "<p>id for the new control, generated automatically if no id is given</p>",
+        "phoneName": "sId",
+        "depth": 0,
+        "types": [
+          {
+            "name": "string",
+            "linkEnabled": false
+          }
+        ],
+        "defaultValue": ""
+      },
+      {
+        "name": "mSettings",
+        "optional": true,
+        "description": "<p>initial settings for the new control</p>",
+        "phoneName": "mSettings",
+        "depth": 0,
+        "types": [
+          {
+            "name": "object",
+            "linkEnabled": false
+          }
+        ],
+        "defaultValue": ""
+      }
+    ],
+    "description": "<p>Constructor for a new mvc/JSView.</p>",
+    "references": [],
+    "codeExample": "<pre class=\"prettyprint\">new sap.ui.core.mvc.JSView(sId?, mSettings?)</pre>"
+  },
+  "properties": [
+    {
+      "name": "sap.ui.core.mvc.JSView.asyncSupport",
+      "visibility": "public",
+      "since": "1.30",
+      "description": "<p>Flag for feature detection of asynchronous loading/rendering</p>"
+    }
+  ],
+  "methods": [
+    {
+      "name": "sap.ui.core.mvc.JSView.create",
+      "visibility": "public",
+      "static": true,
+      "since": "1.56.0",
+      "returnValue": {
+        "type": "Promise",
+        "description": "<p>A Promise that resolves with the view instance</p>",
+        "types": [
+          {
+            "value": "Promise"
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "mOptions",
+          "optional": false,
+          "description": "<p>A map containing the view configuration options.</p>",
+          "types": [
+            {
+              "value": "map"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "id",
+          "optional": true,
+          "description": "<p>Specifies an ID for the View instance. If no ID is given, an ID will be generated.</p>",
+          "depth": 1,
+          "types": [
+            {
+              "value": "string"
+            }
+          ],
+          "phoneName": "mOptions.id",
+          "defaultValue": ""
+        },
+        {
+          "name": "viewName",
+          "optional": true,
+          "description": "<p>Name of the view. The view must be defined using <code>sap.ui.core.mvc.JSView.extend</code>.</p>",
+          "depth": 1,
+          "types": [
+            {
+              "value": "string"
+            }
+          ],
+          "phoneName": "mOptions.viewName",
+          "defaultValue": ""
+        },
+        {
+          "name": "controller",
+          "optional": true,
+          "description": "<p>Controller instance to be used for this view. The given controller instance overrides the controller defined in the view definition. Sharing a controller instance between multiple views is not supported.</p>",
+          "depth": 1,
+          "types": [
+            {
+              "value": "sap.ui.core.mvc.Controller",
+              "linkEnabled": true,
+              "href": "#/api/sap.ui.core.mvc.Controller"
+            }
+          ],
+          "phoneName": "mOptions.controller",
+          "defaultValue": ""
+        }
+      ],
+      "description": "<p>Creates an instance of the view with the given name (and id).</p>",
+      "href": "#/api/sap.ui.core.mvc.JSView/methods/sap.ui.core.mvc.JSView.create",
+      "code": "<pre class=\"prettyprint\">sap.ui.core.mvc.JSView.create(mOptions) : Promise</pre>"
+    },
+    {
+      "name": "createContent",
+      "visibility": "public",
+      "returnValue": {
+        "type": "sap.ui.core.Control",
+        "description": "<p>a control or (typically) tree of controls representing the View user interface</p>",
+        "types": [
+          {
+            "value": "sap.ui.core.Control",
+            "href": "#/api/sap.ui.core.Control",
+            "linkEnabled": true
+          }
+        ]
+      },
+      "description": "<p>A method to be implemented by JSViews, returning the View UI. While for declarative View types like XMLView or JSONView the user interface definition is declared in a separate file, JSViews programmatically construct the UI. This happens in the createContent method which every JSView needs to implement. The View implementation can construct the complete UI in this method - or only return the root control and create the rest of the UI lazily later on.</p>",
+      "href": "#/api/sap.ui.core.mvc.JSView/methods/createContent",
+      "code": "<pre class=\"prettyprint\">createContent() : sap.ui.core.Control</pre>"
+    },
+    {
+      "name": "sap.ui.core.mvc.JSView.extend",
+      "visibility": "public",
+      "static": true,
+      "returnValue": {
+        "type": "function",
+        "description": "<p>Created class / constructor function</p>",
+        "types": [
+          {
+            "value": "function"
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "sClassName",
+          "optional": false,
+          "description": "<p>Name of the class being created</p>",
+          "types": [
+            {
+              "value": "string"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "oClassInfo",
+          "optional": true,
+          "description": "<p>Object literal with information about the class</p>",
+          "types": [
+            {
+              "value": "object"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "FNMetaImpl",
+          "optional": true,
+          "description": "<p>Constructor function for the metadata object; if not given, it defaults to <code>sap.ui.core.ElementMetadata</code></p>",
+          "types": [
+            {
+              "value": "function"
+            }
+          ],
+          "defaultValue": ""
+        }
+      ],
+      "description": "<p>Creates a new subclass of class sap.ui.core.mvc.JSView with name <code>sClassName</code> and enriches it with the information contained in <code>oClassInfo</code>.</p><p><code>oClassInfo</code> might contain the same kind of information as described in <a target=\"_self\" class=\"jsdoclink\" href=\"#/api/sap.ui.core.mvc.View/methods/sap.ui.core.mvc.View.extend\">sap.ui.core.mvc.View.extend</a>.</p>",
+      "href": "#/api/sap.ui.core.mvc.JSView/methods/sap.ui.core.mvc.JSView.extend",
+      "code": "<pre class=\"prettyprint\">sap.ui.core.mvc.JSView.extend(sClassName, oClassInfo?, FNMetaImpl?) : function</pre>"
+    },
+    {
+      "name": "getAutoPrefixId",
+      "visibility": "protected",
+      "since": "1.15.1",
+      "returnValue": {
+        "type": "boolean",
+        "description": "<p>true, if the controls IDs should be prefixed automatically</p>",
+        "types": [
+          {
+            "value": "boolean"
+          }
+        ]
+      },
+      "description": "<p>A method to be implemented by JSViews, returning the flag whether to prefix the IDs of controls automatically or not if the controls are created inside the <a target=\"_self\" class=\"jsdoclink\" href=\"#/api/sap.ui.core.mvc.JSView/methods/createContent\">sap.ui.core.mvc.JSView#createContent</a> function. By default this feature is not activated.</p><p>You can overwrite this function and return true to activate the automatic prefixing.</p>",
+      "href": "#/api/sap.ui.core.mvc.JSView/methods/getAutoPrefixId",
+      "code": "<pre class=\"prettyprint\">getAutoPrefixId() : boolean</pre>"
+    },
+    {
+      "name": "sap.ui.core.mvc.JSView.getMetadata",
+      "visibility": "public",
+      "static": true,
+      "returnValue": {
+        "type": "sap.ui.base.Metadata",
+        "description": "<p>Metadata object describing this class</p>",
+        "types": [
+          {
+            "value": "sap.ui.base.Metadata",
+            "href": "#/api/sap.ui.base.Metadata",
+            "linkEnabled": true
+          }
+        ]
+      },
+      "description": "<p>Returns a metadata object for class sap.ui.core.mvc.JSView.</p>",
+      "href": "#/api/sap.ui.core.mvc.JSView/methods/sap.ui.core.mvc.JSView.getMetadata",
+      "code": "<pre class=\"prettyprint\">sap.ui.core.mvc.JSView.getMetadata() : sap.ui.base.Metadata</pre>"
+    }
+  ],
+  "displayName": "sap.ui.core.mvc.JSView",
+  "component": "CA-UI5-COR",
+  "hasSample": false,
+  "title": "class sap.ui.core.mvc.JSView",
+  "subTitle": ""
+}
