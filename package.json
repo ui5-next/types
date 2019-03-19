@@ -4,6 +4,7 @@
   "description": "openui5 types",
   "main": "bin",
   "scripts": {
+    "build": "ts-node ./builder/builder",
     "test": "jest",
     "test:cov": "jest && codecov"
   },
@@ -40,6 +41,7 @@
     "handlebars": "^4.1.1",
     "jest": "^24.1.0",
     "lodash": "^4.17.11",
+    "node-fetch": "^2.3.0",
     "ts-jest": "^24.0.0",
     "ts-loader": "4",
     "ts-node": "^8.0.3",
