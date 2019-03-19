@@ -2,14 +2,14 @@
 declare module '{{module}}' {
 
   {{#if extends}}
-  import {{{formatNameSpaceToClassName extends}}} from "{{{formatNameSpaceToModule extends}}}"
+  import SuperClass from "{{{formatNameSpaceToModule extends}}}"
   {{/if}}
 
   /**
     * {{{formatDescription description}}}
     * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
     */
-  export {{formatDefault module}}class {{formatBaseName basename}} {{#if extends}}extends {{{formatNameSpaceToClassName extends}}}{{/if}} {
+  export {{formatDefault module basename}}class {{formatBaseName basename}} {{#if extends}}extends SuperClass{{/if}} {
 
     {{#each methods}}
     /**
@@ -17,7 +17,7 @@ declare module '{{module}}' {
       {{#if href}}* @see [document](https://openui5.hana.ondemand.com/{{href}}{{/if}})
       * @since {{since}}
       */
-    {{#if static}} static{{/if}} {{{formatClassMethodName name}}}({{#each parameters}}{{#unless phoneName}}{{{name}}}, {{/unless}}{{/each}});
+    {{#if static}} static{{/if}} {{{formatClassMethodName name}}}({{#each parameters}}{{#unless phoneName}}{{{name}}}, {{/unless}}{{/each}}...objects);
 
     {{/each}}
 

@@ -31,12 +31,17 @@ Handlebars.registerHelper("formatBaseName", (base: string) => {
 })
 
 
-Handlebars.registerHelper("formatDefault", (m: string) => {
+Handlebars.registerHelper("formatDefault", (m: string, cName: string) => {
     const moduleName = m.split("/").pop()
     if (moduleName.toLowerCase() == moduleName) {
         return ""
     } else {
-        return "default "
+        if (moduleName == cName) {
+            return "default "
+        } else {
+            return ""
+        }
+
     }
 })
 
@@ -56,9 +61,10 @@ Handlebars.registerHelper("formatClassMethodName", (n: string) => {
     return n.split(".").pop()
 })
 
-
-
 export const formatClassString = (s: UI5Symbol) => {
+    if (s.extends && !s.extends.startsWith("sap")) {
+        delete s.extends
+    }
     if (s.kind == Kind.Class) {
         return templates.classTempalete(s)
     } else {
