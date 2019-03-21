@@ -5,7 +5,8 @@ import * as path from "path";
 import * as Handlebars from "handlebars";
 import * as TurnDownService from "turndown";
 import { analysisDependencies } from './dependencies';
-import { upperFirst, trimStart } from "lodash";
+import { upperFirst, trimStart, trimEnd, } from "lodash";
+import { NotExistedTypes } from './not_existed_type';
 
 const turnDownService = new TurnDownService()
 
@@ -19,6 +20,8 @@ const loadTemplate = (p: string) => Handlebars.compile(
 const templates = {
     classTempalete: loadTemplate("./templates/class.ts.template"),
     enumTemplate: loadTemplate("./templates/enum.ts.template"),
+    typeTemplate: loadTemplate("./templates/types.ts.template"),
+    nsTypeTemplate: loadTemplate("./templates/ns.type.ts.template"),
 }
 
 Handlebars.registerHelper("formatNameSpaceToModule", (m: string) => {
@@ -62,21 +65,32 @@ const formatModuleName = (m: string) => {
 
     m = trimStart(m, "module:")
     m = m.replace("Promise.", "Promise")
-
-    if (m.startsWith("Promise<")) {
+    if (NotExistedTypes.includes(m.replace(/\//g, "."))) {
+        return "any"
+    } else if (m.startsWith("Promise<")) {
         const regResult = /Promise\<(.*?)\>/.exec(m);
         if (regResult) {
             return `Promise<${formatModuleName(regResult[1])}>`
         } else {
             return "Promise<any>"
         }
+    } else if (m.startsWith("Array<")) {
+        const regResult = /Array\<(.*?)\>/.exec(m);
+        if (regResult) {
+            return `Array<${formatModuleName(regResult[1])}>`
+        } else {
+            return "Array<any>"
+        }
     } else if (m.startsWith("jQuery")) {
         return "any"
     } else if (m.startsWith("sap")) {
         return `Imported${m.split(/\.|\//g).map(upperFirst).join("")}`
+    } else if (m.endsWith("[]")) {
+        return `${formatModuleName(trimEnd(m, "[]"))}[]`
     } else {
         switch (m) {
             case "int":
+            case "float":
                 return "number"
             case "bject[]":
                 return "object[]"
@@ -90,11 +104,17 @@ const formatModuleName = (m: string) => {
                 return "Function"
             case "array":
                 return "Array<any>"
+            case "ControlSelector":
+                return formatModuleName("sap.ui.test.RecordReplay.ControlSelector")
             case "int[]":
+            case "float[]":
                 return "number[]"
             case "ap":
             case "*":
             case "DOMRef":
+            case "T":
+            case "Ref":
+            case "DomNode":
                 return "any"
             case "Array":
                 return "Array<any>"
@@ -110,6 +130,9 @@ Handlebars.registerHelper("formatModuleName", formatModuleName)
 
 const formatReturnType = (m: string) => {
     if (m) {
+        if (m.startsWith("Array.")) {
+            m = m.replace("Array.", "Array")
+        }
         if (m.startsWith("Promise") && (!m.startsWith("Promise|")) && m.indexOf("|") > 0) {
             const regResult = /Promise\.?\<(.*?)\>/.exec(m);
             if (regResult) {
@@ -117,6 +140,15 @@ const formatReturnType = (m: string) => {
             } else {
                 return "Promise<any>"
             }
+        } else if (m.startsWith("Array") && (!m.startsWith("Array|")) && m.indexOf("|") > 0) {
+            const regResult = /Array\.?\<(.*?)\>/.exec(m);
+            if (regResult) {
+                return `Array<${formatReturnType(regResult[1])}>`
+            } else {
+                return "Array<any>"
+            }
+        } else if (m.endsWith("[]")) {
+            return `${formatReturnType(trimEnd(m, "[]"))}[]`
         } else {
             return `${m.split("|").map(formatModuleName).join("|")}`
         }
@@ -146,6 +178,19 @@ export const formatEnumString = (s: UI5Symbol) => {
     return templates.enumTemplate(s)
 }
 
+export const formatTypeString = (s: UI5Symbol) => {
+    return templates.typeTemplate({ ...s, imports: analysisDependencies(s) })
+}
+
+export const formatNsType = (s: UI5Symbol) => {
+    return templates.nsTypeTemplate(s)
+}
+
+export const formatInterfaceString = (s: UI5Symbol) => {
+    return templates.typeTemplate(s)
+}
+
+
 export const formatClassString = (s: UI5Symbol) => {
     // it maybe extends from native js object
     if (s.extends && !s.extends.startsWith("sap")) {
@@ -157,7 +202,14 @@ export const formatClassString = (s: UI5Symbol) => {
         "parseValue",
         "setVisible",
         "getDomRef",
-        "getControlMessages"
+        "getControlMessages",
+        "clone",
+        "setDatetime",
+        "getTooltip",
+        "setValue",
+        "getValue",
+        "setAuthorPicture",
+        "setPriority",
     ]
 
     if (s.methods) {

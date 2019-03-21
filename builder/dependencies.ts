@@ -1,27 +1,35 @@
 import { UI5Symbol } from "./types";
 import { forEach, trimEnd, trimStart } from "lodash";
-
-const formatModuleFromNamespace = (s: string): string => {
-  // remove end array type
-  if (s.endsWith("[]")) {
-    s = trimEnd(s, "[]")
-  }
-  return s.replace(/\./g, "/")
-}
-
+import { NotExistedTypes } from "./not_existed_type";
 
 export const analysisDependencies = (s: UI5Symbol): string[] => {
   const rt = new Set<string>()
 
   const addToSet = (mName: string = "", set: Set<string>) => {
     mName = trimStart(mName, "module:")
-    if (mName.startsWith("sap")) {
+    mName = trimEnd(mName, "[]")
+    mName = mName.replace("Promise.", "Promise")
+    mName = mName.replace("Array.", "Array")
+
+    mName = mName.replace(/\./g, "/")
+
+    if (mName && mName.startsWith("Promise<") && (!mName.startsWith("Promise|"))) {
+      const regResult = /Promise\<(.*?)\>/.exec(mName);
+      if (regResult) {
+        addToSet(regResult[1], set)
+      } else {
+        addToSet(mName, rt)
+      }
+    } else {
       if (mName.indexOf("|") > 0) {
         mName.split("|").forEach(v => addToSet(v, set))
       } else {
-        set.add(formatModuleFromNamespace(mName))
+        if (mName.startsWith("sap") && !NotExistedTypes.includes(mName.replace(/\//g, "."))) {
+          set.add(trimEnd(mName, ">")) // trim unexpected end '<'
+        }
       }
     }
+
   }
 
   if (s.extends) {
@@ -30,18 +38,7 @@ export const analysisDependencies = (s: UI5Symbol): string[] => {
   if (s.methods) {
     forEach(s.methods, m => {
       if (m.returnValue) {
-        const rtType = m.returnValue.type
-        if (rtType && rtType.startsWith("Promise") && (!rtType.startsWith("Promise|")) && rtType.indexOf("|") > 0) {
-          const regResult = /Promise\.?\<(.*?)\>/.exec(rtType);
-          if (regResult) {
-            const inner = regResult[1]
-            inner.split("|").forEach(i => addToSet(i, rt))
-          } else {
-            addToSet(rtType, rt)
-          }
-        } else {
-          addToSet(rtType, rt)
-        }
+        addToSet(m.returnValue.type, rt)
       }
       if (m.parameters) {
         forEach(m.parameters, parameter => {
@@ -52,5 +49,11 @@ export const analysisDependencies = (s: UI5Symbol): string[] => {
       }
     })
   }
+  if (s.properties) {
+    forEach(s.properties, p => {
+      addToSet(p.type, rt)
+    })
+  }
+
   return Array.from(rt)
 }

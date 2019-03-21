@@ -9,7 +9,6 @@
     "test": "jest",
     "test:cov": "jest && codecov"
   },
-  "typings": "./bin/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ui5-next/types.git"

@@ -1,14 +1,18 @@
 
-import { UI5APIRef, Kind } from './types';
+import { UI5APIRef, Kind, Stereotype } from './types';
 import { writeFileSync } from "fs";
 import * as path from "path";
-import { formatClassString, formatEnumString } from './formatter';
+import { formatClassString, formatEnumString, formatTypeString, formatNsType, formatInterfaceString } from './formatter';
 import * as fetch from "node-fetch";
 
 export const buildTypeDefination = (ref: UI5APIRef) => {
+
+  console.log(`build type defination for ${ref.library}`)
+
   var typeString = `
 // UI5 Version: ${ref.version} 
 // Date: ${new Date().toISOString()}
+// Library: ${ref.library}
 
 `
 
@@ -20,21 +24,47 @@ export const buildTypeDefination = (ref: UI5APIRef) => {
       case Kind.Enum:
         typeString += formatEnumString(s)
         break;
+      case Kind.Typedef:
+        typeString += formatTypeString(s)
+        break;
+      case Kind.Namespace:
+        if (s["ui5-metadata"] && s["ui5-metadata"].stereotype == Stereotype.Datatype) {
+          typeString += formatNsType(s)
+        } else if (s.basename && s.export && s.visibility == "public" && s.basename == s.export) {
+          typeString += formatEnumString(s)
+        }
+        break;
+      case Kind.Interface:
+        typeString += formatInterfaceString(s)
+        break;
       default:
         break;
     }
   })
 
-  writeFileSync(path.join(__dirname, "../bin/index.d.ts"), typeString, { encoding: "UTF-8" })
+  writeFileSync(path.join(__dirname, `../bin/${ref.library}.d.ts`), typeString, { encoding: "UTF-8" })
 }
 
+export const writeIndexDTS = (libs: string[]) => {
+  writeFileSync(path.join(__dirname, "../bin/index.d.ts"), libs.map(l => `import "./${l}"`).join("\n"), { encoding: "UTF-8" })
+}
+
+const libs = [
+  "sap.m",
+  "sap.ui.core",
+  "sap.ui.unified",
+  "sap.ui.support",
+]
 
 
 // MAIN process
 if (require.main === module) {
-  fetch(`https://openui5.hana.ondemand.com/test-resources/sap/ui/core/designtime/apiref/api.json`)
-    .then(res => res.json())
-    .then(buildTypeDefination)
+  const refLinks: string[] = libs.map(
+    l => `https://openui5.hana.ondemand.com/test-resources/${l.replace(/\./g, "/")}/designtime/apiref/api.json`
+  )
+  Promise
+    .all(refLinks.map(refLink => fetch(refLink).then(res => res.json()).then(buildTypeDefination)))
     .catch(console.error)
+  writeIndexDTS(libs)
 }
 

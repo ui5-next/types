@@ -1,11 +1,15 @@
 
 declare module '{{formatNameSpaceToModule name}}' {
 
+  {{#each imports}}
+  import {{{formatModuleName this}}} from "{{this}}"
+  {{/each}}
+
   /**
     * {{{formatDescription description}}}
     * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
     */
-  export enum {{formatBaseName basename}} {
+  export default interface {{formatBaseName basename}}  {
 
     {{#each properties}}
     /**
@@ -13,9 +17,8 @@ declare module '{{formatNameSpaceToModule name}}' {
       {{#if href}}* @see [document](https://openui5.hana.ondemand.com/{{href}}{{/if}})
       {{#if since}}* @since {{since}}{{/if}}
       */
-    {{formatLastPart name}},
+    {{formatLastPart name}}: {{{formatReturnType type}}}
     {{/each}}
 
   }
-  export default {{formatBaseName basename}}
 }

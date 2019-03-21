@@ -9,7 +9,10 @@ Provide UI5 Types Defination.
 * [x] class
 * [x] class method
 * [x] class static method
-* [ ] enums
-* [ ] method parameters
-* [ ] method return type
-* [ ] class constractor
+* [ ] class constructor
+* [ ] class method parameters type
+* [x] class method return type
+* [x] enums
+* [x] types
+* [x] interfaces
+* [x] namespace type

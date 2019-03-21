@@ -1,0 +1,12 @@
+
+declare module '{{formatNameSpaceToModule name}}' {
+
+  /**
+    * {{{formatDescription description}}}
+    * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
+    */
+  type {{formatBaseName basename}} = {{ui5-metadata.basetype}}
+  
+  export default {{formatBaseName basename}}
+
+}
