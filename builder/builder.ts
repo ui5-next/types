@@ -2,7 +2,7 @@
 import { UI5APIRef, Kind } from './types';
 import { writeFileSync } from "fs";
 import * as path from "path";
-import { formatClassString } from './formatter';
+import { formatClassString, formatEnumString } from './formatter';
 import * as fetch from "node-fetch";
 
 export const buildTypeDefination = (ref: UI5APIRef) => {
@@ -10,16 +10,18 @@ export const buildTypeDefination = (ref: UI5APIRef) => {
 // UI5 Version: ${ref.version} 
 // Date: ${new Date().toISOString()}
 
-// failback module
-declare module 'sap/*' {
-  export default undefined
-}
-
 `
 
   ref.symbols.forEach(s => {
-    if (s.kind == Kind.Class) {
-      typeString += formatClassString(s)
+    switch (s.kind) {
+      case Kind.Class:
+        typeString += formatClassString(s)
+        break;
+      case Kind.Enum:
+        typeString += formatEnumString(s)
+        break;
+      default:
+        break;
     }
   })
 

@@ -1,5 +1,5 @@
 import { UI5Symbol } from "./types";
-import { forEach, trimEnd } from "lodash";
+import { forEach, trimEnd, trimStart } from "lodash";
 
 const formatModuleFromNamespace = (s: string): string => {
   // remove end array type
@@ -12,10 +12,10 @@ const formatModuleFromNamespace = (s: string): string => {
 
 export const analysisDependencies = (s: UI5Symbol): string[] => {
   const rt = new Set<string>()
-  const moduleName = s.module;
 
   const addToSet = (mName: string = "", set: Set<string>) => {
-    if (mName.startsWith("sap") && mName != moduleName) {
+    mName = trimStart(mName, "module:")
+    if (mName.startsWith("sap")) {
       if (mName.indexOf("|") > 0) {
         mName.split("|").forEach(v => addToSet(v, set))
       } else {
@@ -30,7 +30,18 @@ export const analysisDependencies = (s: UI5Symbol): string[] => {
   if (s.methods) {
     forEach(s.methods, m => {
       if (m.returnValue) {
-        addToSet(m.returnValue.type, rt)
+        const rtType = m.returnValue.type
+        if (rtType && rtType.startsWith("Promise") && (!rtType.startsWith("Promise|")) && rtType.indexOf("|") > 0) {
+          const regResult = /Promise\.?\<(.*?)\>/.exec(rtType);
+          if (regResult) {
+            const inner = regResult[1]
+            inner.split("|").forEach(i => addToSet(i, rt))
+          } else {
+            addToSet(rtType, rt)
+          }
+        } else {
+          addToSet(rtType, rt)
+        }
       }
       if (m.parameters) {
         forEach(m.parameters, parameter => {

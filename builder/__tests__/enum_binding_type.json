@@ -1,0 +1,38 @@
+{
+  "kind": "enum",
+  "name": "sap.ui.model.BindingMode",
+  "basename": "BindingMode",
+  "resource": "sap/ui/model/BindingMode.js",
+  "module": "sap/ui/model/BindingMode",
+  "export": "",
+  "static": true,
+  "visibility": "public",
+  "description": "<p>Binding type definitions.</p>",
+  "properties": [
+    {
+      "name": "sap.ui.model.BindingMode.Default",
+      "visibility": "public",
+      "description": "<p>BindingMode default means that the binding mode of the model is used</p>"
+    },
+    {
+      "name": "sap.ui.model.BindingMode.OneTime",
+      "visibility": "public",
+      "description": "<p>BindingMode one time means value is only read from the model once</p>"
+    },
+    {
+      "name": "sap.ui.model.BindingMode.OneWay",
+      "visibility": "public",
+      "description": "<p>BindingMode one way means from model to view</p>"
+    },
+    {
+      "name": "sap.ui.model.BindingMode.TwoWay",
+      "visibility": "public",
+      "description": "<p>BindingMode two way means from model to view and vice versa</p>"
+    }
+  ],
+  "displayName": "sap.ui.model.BindingMode",
+  "component": "CA-UI5-COR",
+  "hasSample": false,
+  "title": "enum sap.ui.model.BindingMode",
+  "subTitle": ""
+}

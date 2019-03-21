@@ -51,8 +51,5 @@
     "tslint-loader": "^3.5.3",
     "turndown": "^5.0.3",
     "typescript": "^3.3.3333"
-  },
-  "dependencies": {
-    "@types/openui5": "^1.40.2"
   }
 }

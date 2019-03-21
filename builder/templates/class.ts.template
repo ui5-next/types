@@ -1,5 +1,5 @@
 
-declare module '{{module}}' {
+declare module '{{formatNameSpaceToModule name}}' {
 
   {{#each imports}}
   import {{{formatModuleName this}}} from "{{this}}"
@@ -9,13 +9,13 @@ declare module '{{module}}' {
     * {{{formatDescription description}}}
     * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
     */
-  export {{formatDefault module basename}}class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}}{{/if}} {
+  export default class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}}{{/if}} {
 
     {{#each methods}}
     /**
       * {{{formatDescription description}}}
       {{#if href}}* @see [document](https://openui5.hana.ondemand.com/{{href}}{{/if}})
-      * {{#if since}}@since {{since}}{{/if}}
+      {{#if since}}* @since {{since}}{{/if}}
       */
     {{#if static}} static{{/if}} {{{formatClassMethodName name}}}({{#each parameters}}{{#unless phoneName}}{{{name}}}, {{/unless}}{{/each}}...objects) : {{{formatReturnType returnValue.type}}};
 
