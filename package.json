@@ -23,7 +23,7 @@
     "transform": {
       ".(ts|tsx)": "ts-jest"
     },
-    "testRegex": "builder/.*?__tests__/.*\\.ts$",
+    "testRegex": "builder/.*?__tests__/.*_test\\.ts$",
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
     "coveragePathIgnorePatterns": [
@@ -51,5 +51,8 @@
     "tslint-loader": "^3.5.3",
     "turndown": "^5.0.3",
     "typescript": "^3.3.3333"
+  },
+  "dependencies": {
+    "@types/openui5": "^1.40.2"
   }
 }

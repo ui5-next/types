@@ -4,6 +4,8 @@ import { readFileSync } from "fs";
 import * as path from "path";
 import * as Handlebars from "handlebars";
 import * as TurnDownService from "turndown";
+import { analysisDependencies } from './dependencies';
+import { upperFirst, trimStart } from "lodash";
 
 const turnDownService = new TurnDownService()
 
@@ -20,6 +22,10 @@ const templates = {
 
 Handlebars.registerHelper("formatNameSpaceToModule", (m: string) => {
     return m.replace(/\./g, "/")
+})
+
+Handlebars.registerHelper("extractImportClassName", (m: string) => {
+    return `Imported${m.split("/").pop()}`
 })
 
 Handlebars.registerHelper("formatBaseName", (base: string) => {
@@ -53,6 +59,46 @@ Handlebars.registerHelper("formatDescription", (d: string) => {
     }
 })
 
+const formatModuleName = (m: string) => {
+    m = trimStart(m, "module:")
+    if (m.startsWith("sap")) {
+        return `Imported${m.split(/\.|\//g).map(upperFirst).join("")}`
+    } else {
+        switch (m) {
+            case "int":
+                return "number"
+            case "bject[]":
+                return "object[]"
+            case "bject":
+                return "object"
+            case "Promise":
+                return "Promise<any>"
+            case "ndefined":
+                return "undefined";
+            case "function":
+                return "Function"
+            case "array":
+                return "Array<any>"
+            case "ap":
+                return "any"
+            case "Array":
+                return "Array<any>"
+            default:
+                return m
+        }
+    }
+}
+
+Handlebars.registerHelper("formatModuleName", formatModuleName)
+
+Handlebars.registerHelper("formatReturnType", (m: string) => {
+    if (m) {
+        return `${m.split("|").map(formatModuleName).join("|")}`
+    } else {
+        return "any"
+    }
+})
+
 Handlebars.registerHelper("formatNameSpaceToClassName", (m: string) => {
     return m.split(".").pop()
 })
@@ -66,7 +112,7 @@ export const formatClassString = (s: UI5Symbol) => {
         delete s.extends
     }
     if (s.kind == Kind.Class) {
-        return templates.classTempalete(s)
+        return templates.classTempalete({ ...s, imports: analysisDependencies(s) })
     } else {
         return ""
     }

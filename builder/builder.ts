@@ -6,7 +6,16 @@ import { formatClassString } from './formatter';
 import * as fetch from "node-fetch";
 
 export const buildTypeDefination = (ref: UI5APIRef) => {
-  var typeString = `// UI5 Version: ${ref.version}\n// Date: ${new Date().toISOString()}\n`;
+  var typeString = `
+// UI5 Version: ${ref.version} 
+// Date: ${new Date().toISOString()}
+
+// failback module
+declare module 'sap/*' {
+  export default undefined
+}
+
+`
 
   ref.symbols.forEach(s => {
     if (s.kind == Kind.Class) {

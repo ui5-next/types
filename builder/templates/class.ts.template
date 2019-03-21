@@ -1,23 +1,23 @@
 
 declare module '{{module}}' {
 
-  {{#if extends}}
-  import SuperClass from "{{{formatNameSpaceToModule extends}}}"
-  {{/if}}
+  {{#each imports}}
+  import {{{formatModuleName this}}} from "{{this}}"
+  {{/each}}
 
   /**
     * {{{formatDescription description}}}
     * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
     */
-  export {{formatDefault module basename}}class {{formatBaseName basename}} {{#if extends}}extends SuperClass{{/if}} {
+  export {{formatDefault module basename}}class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}}{{/if}} {
 
     {{#each methods}}
     /**
       * {{{formatDescription description}}}
       {{#if href}}* @see [document](https://openui5.hana.ondemand.com/{{href}}{{/if}})
-      * @since {{since}}
+      * {{#if since}}@since {{since}}{{/if}}
       */
-    {{#if static}} static{{/if}} {{{formatClassMethodName name}}}({{#each parameters}}{{#unless phoneName}}{{{name}}}, {{/unless}}{{/each}}...objects);
+    {{#if static}} static{{/if}} {{{formatClassMethodName name}}}({{#each parameters}}{{#unless phoneName}}{{{name}}}, {{/unless}}{{/each}}...objects) : {{{formatReturnType returnValue.type}}};
 
     {{/each}}
 
