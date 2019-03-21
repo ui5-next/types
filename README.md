@@ -20,4 +20,4 @@ Provide UI5 Types Defination.
 ## to do
 
 * [ ] document
-* [ ] CI build
+* [ ] CI nightly build
