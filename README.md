@@ -16,3 +16,8 @@ Provide UI5 Types Defination.
 * [x] types
 * [x] interfaces
 * [x] namespace type
+
+## to do
+
+* [ ] document
+* [ ] CI build
