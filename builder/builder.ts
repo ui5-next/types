@@ -8,14 +8,15 @@ import { Ui5DistVersion, Library } from './ui5_dist_types';
 
 export const buildTypeDefination = (ref: UI5APIRef) => {
 
-  console.log(`build type defination for ${ref.library}`)
+  console.log(`Building type defination for ${ref.library}`)
 
-  var typeString = `
-// UI5 Version: ${ref.version} 
-// Date: ${new Date().toISOString()}
-// Library: ${ref.library}
+  var typeString = ""
 
-`
+  typeString += `// UI5 Version: ${ref.version}\n`
+
+  typeString += `// Date: ${new Date().toISOString()}\n`
+
+  typeString += `// Library: ${ref.library}\n`
 
   ref.symbols.forEach(s => {
     switch (s.kind) {
@@ -52,25 +53,25 @@ export const writeIndexDTS = (libs: string[]) => {
 
 const ui5_host = "openui5.hana.ondemand.com"
 
+const formatApiRefURL = (lib: Library) => `https://${ui5_host}/test-resources/${lib.name.replace(/\./g, "/")}/designtime/apiref/api.json`
+
 // MAIN process
 if (require.main === module) {
 
   fetch(`https://${ui5_host}/resources/sap-ui-version.json`)
     .then(res => res.json())
     .then((version: Ui5DistVersion) => {
-      const libraries = version.libraries.filter(l => !l.name.startsWith("themelib"))
+      const libraries = version.libraries.filter(l => !l.name.startsWith("themelib") && l.name != "sap.ui.server.java")
       console.log(`Building ui5 with version: ${version.version}`)
 
-      const formatApiRefURL = (lib: Library) => `https://${ui5_host}/test-resources/${lib.name.replace(/\./g, "/")}/designtime/apiref/api.json`
-
       Promise
-        .all(libraries.map(lib =>
-          fetch(formatApiRefURL(lib)).then(res => res.json()).then(buildTypeDefination)
-        ))
+        .all(libraries
+          .map(formatApiRefURL)
+          .map(url => fetch(url).then(res => res.json()).then(buildTypeDefination).catch(console.error)))
         .then(() => {
           writeIndexDTS(libraries.map(library => library.name))
         })
-        .catch(console.error)
+
 
     })
 
