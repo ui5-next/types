@@ -1,13 +1,14 @@
 {
   "name": "@ui5-next/types",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "private": false,
   "description": "openui5 types",
   "main": "index.js",
   "scripts": {
     "build": "ts-node ./builder/builder",
     "test": "jest",
-    "test:cov": "jest && codecov"
+    "test:cov": "jest && codecov",
+    "publish:tag": "npm publish --access public --tag latest"
   },
   "repository": {
     "type": "git",

@@ -4,6 +4,7 @@ import { writeFileSync } from "fs";
 import * as path from "path";
 import { formatClassString, formatEnumString, formatTypeString, formatNsType, formatInterfaceString } from './formatter';
 import * as fetch from "node-fetch";
+import { Ui5DistVersion, Library } from './ui5_dist_types';
 
 export const buildTypeDefination = (ref: UI5APIRef) => {
 
@@ -49,22 +50,29 @@ export const writeIndexDTS = (libs: string[]) => {
   writeFileSync(path.join(__dirname, "../bin/index.d.ts"), libs.map(l => `import "./${l}"`).join("\n"), { encoding: "UTF-8" })
 }
 
-const libs = [
-  "sap.m",
-  "sap.ui.core",
-  "sap.ui.unified",
-  "sap.ui.support",
-]
-
+const ui5_host = "openui5.hana.ondemand.com"
 
 // MAIN process
 if (require.main === module) {
-  const refLinks: string[] = libs.map(
-    l => `https://openui5.hana.ondemand.com/test-resources/${l.replace(/\./g, "/")}/designtime/apiref/api.json`
-  )
-  Promise
-    .all(refLinks.map(refLink => fetch(refLink).then(res => res.json()).then(buildTypeDefination)))
-    .catch(console.error)
-  writeIndexDTS(libs)
+
+  fetch(`https://${ui5_host}/resources/sap-ui-version.json`)
+    .then(res => res.json())
+    .then((version: Ui5DistVersion) => {
+      const libraries = version.libraries.filter(l => !l.name.startsWith("themelib"))
+      console.log(`Building ui5 with version: ${version.version}`)
+
+      const formatApiRefURL = (lib: Library) => `https://${ui5_host}/test-resources/${lib.name.replace(/\./g, "/")}/designtime/apiref/api.json`
+
+      Promise
+        .all(libraries.map(lib =>
+          fetch(formatApiRefURL(lib)).then(res => res.json()).then(buildTypeDefination)
+        ))
+        .then(() => {
+          writeIndexDTS(libraries.map(library => library.name))
+        })
+        .catch(console.error)
+
+    })
+
 }
 

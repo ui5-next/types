@@ -1,4 +1,5 @@
 {
     "editor.tabSize": 2,
-    "editor.useTabStops": true
+    "editor.useTabStops": true,
+    "editor.wordWrap": "on"
 }
