@@ -29,7 +29,7 @@ Provide ES6 UI5 types defination. To support vscode code intelligence.
 
 ```typescript
 // those method return type will be any
-// because there parameters are different in parent-class & sub-class
+// because their parameters are different in parent-class & sub-class
 const skipMethods = [
     "sap.ui.base.Object.defineClass",
     "parseValue",
