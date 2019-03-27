@@ -1,8 +1,10 @@
 # Open UI5 Types
 
-[![npm version](https://badge.fury.io/js/%40ui5-next%2Ftypes.png)](https://badge.fury.io/js/%40ui5-next%2Ftypes)
+![npm (scoped)](https://img.shields.io/npm/v/@ui5-next/types.svg)
 
-Provide UI5 Types Defination.
+Provide ES6 UI5 types defination. To support vscode code intelligence.
+
+![](https://res.cloudinary.com/digf90pwi/image/upload/v1553674217/2019-03-27_16-09-03_mvqoz6.png)
 
 ## types
 
@@ -16,8 +18,9 @@ Provide UI5 Types Defination.
 * [x] types
 * [x] interfaces
 * [x] namespace type
+* [ ] JSX props support
 
 ## to do
 
-* [ ] document
+* [ ] how to document
 * [ ] CI nightly build
