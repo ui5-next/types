@@ -196,7 +196,8 @@ export const formatClassString = (s: UI5Symbol) => {
     if (s.extends && !s.extends.startsWith("sap")) {
         delete s.extends
     }
-    // skip those method, because there parameter are not accepted
+    // those method return type will be any
+    // because there parameter are differnet in parent-class & sub-class
     const skipMethods = [
         "sap.ui.base.Object.defineClass",
         "parseValue",

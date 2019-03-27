@@ -24,3 +24,34 @@ Provide ES6 UI5 types defination. To support vscode code intelligence.
 
 * [ ] how to document
 * [ ] CI nightly build
+
+## comments
+
+```typescript
+// those method return type will be any
+// because there parameter are differnet in parent-class & sub-class
+const skipMethods = [
+    "sap.ui.base.Object.defineClass",
+    "parseValue",
+    "setVisible",
+    "getDomRef",
+    "getControlMessages",
+    "clone",
+    "setDatetime",
+    "getTooltip",
+    "setValue",
+    "getValue",
+    "setAuthorPicture",
+    "setPriority",
+]
+
+// those types are not exist in source
+// so those types will be replace by 'any'
+const NotExistedTypes = [
+  "sap.m.IconTabBarSelectList",
+  "sap.m.P13nConditionOperation",
+  "sap.ui.test.qunit",
+  "sap.ui.core.support.Support",
+  "appointmentsSorterCallback",
+]
+```
