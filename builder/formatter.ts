@@ -197,7 +197,7 @@ export const formatClassString = (s: UI5Symbol) => {
         delete s.extends
     }
     // those method return type will be any
-    // because there parameter are differnet in parent-class & sub-class
+    // because there parameters are different in parent-class & sub-class
     const skipMethods = [
         "sap.ui.base.Object.defineClass",
         "parseValue",
