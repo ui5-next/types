@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@ui5-next/types.svg)
 
-Provide ES6 UI5 types defination. To support vscode code intelligence.
+Provide ES6 UI5 types defination. To support vscode `Code IntelliSense`.
 
 ![](https://res.cloudinary.com/digf90pwi/image/upload/v1553674217/2019-03-27_16-09-03_mvqoz6.png)
 
