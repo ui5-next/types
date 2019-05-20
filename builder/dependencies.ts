@@ -34,6 +34,7 @@ export const analysisDependencies = (s: UI5Symbol): string[] => {
   if (s.extends) {
     addToSet(s.extends, rt)
   }
+
   if (s.methods) {
     forEach(s.methods, m => {
       if (m.returnValue) {
@@ -48,6 +49,41 @@ export const analysisDependencies = (s: UI5Symbol): string[] => {
       }
     })
   }
+
+  if (s.events) {
+    forEach(s.events, e => {
+      if (e.parameters) {
+        forEach(e.parameters, p => {
+          addToSet(p.type, rt)
+        })
+      }
+    })
+  }
+
+  var m = s["ui5-metadata"]
+
+  if (m) {
+
+    if (m.properties) {
+      forEach(m.properties, p => {
+        addToSet(p.type, rt)
+      })
+    }
+
+    if (m.aggregations) {
+      forEach(m.aggregations, a => {
+        addToSet(a.type, rt)
+      })
+    }
+
+    if (m.associations) {
+      forEach(m.associations, a => {
+        addToSet(a.type, rt)
+      })
+    }
+
+  }
+
   if (s.properties) {
     forEach(s.properties, p => {
       addToSet(p.type, rt)

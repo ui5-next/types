@@ -41,9 +41,6 @@ Handlebars.registerHelper("formatImportReactComponent", (base: string) => {
 })
 
 Handlebars.registerHelper("formatBaseName", (base: string) => {
-    if (base == "Object") {
-        return "Object extends Component"
-    }
     return base.split(/\.|\//).pop()
 })
 
@@ -175,10 +172,26 @@ const formatReturnType = (m: string) => {
     }
 }
 
-const formatClassProps = (m: Ui5Metadata): string => {
-    var rt = "any"
+const formatClassProps = (s: UI5Symbol): string => {
+    var rt = "interface Props { }"
+    var items = []
+
+    // interface with function can not process
+    if (s.events) {
+        s.events.forEach(e => {
+            // if (e.parameters) {
+            //     items.push(`${e.name}: (${e.parameters.map(p => `${p.name}`).join(", ")}) => any`)
+            //     // items.push(`${e.name}: (${e.parameters.map(p => `${p.name}: ${formatModuleName(p.type)}`).join(", ")}) => any`)
+            // } else {
+            //     items.push(`${e.name}: (...parameters) => any`)
+            // }
+            items.push(`${e.name}: any`)
+        })
+    }
+
+    const m = s["ui5-metadata"]
     if (m) {
-        var items = []
+
 
         if (m.properties) {
             m.properties.forEach(p => {
@@ -195,7 +208,12 @@ const formatClassProps = (m: Ui5Metadata): string => {
                 items.push(`${a.name}: ${formatModuleName(a.type)}`)
             })
         }
-        rt = `{\n\t\t${items.join(", \n\t\t")}}`
+
+    }
+    if (s.extends) {
+        var refProps = `${formatModuleName(s.extends)}Props`
+        var importD = `import { Props as ${refProps} } from "${s.extends.replace(/\./g, "/")}"`
+        rt = `${importD}\n\texport interface Props extends ${refProps} { ${items.map(i => `\n\t\t${i};`).join("")}\n\t}`
     }
 
     return rt

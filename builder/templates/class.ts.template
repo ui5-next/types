@@ -5,11 +5,15 @@ declare module '{{formatNameSpaceToModule name}}' {
   import {{{formatModuleName this}}} from "{{this}}"
   {{/each}}
 
+  {{{formatClassProps this}}}
+
   /**
     * {{{formatDescription description}}}
     * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
     */
   export default class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}} {{/if}} {
+    
+    props: Props
 
     {{#each methods}}
     /**
