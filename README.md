@@ -18,7 +18,7 @@ Provide ES6 UI5 types definition. To support vscode `Code IntelliSense`.
 * [x] types
 * [x] interfaces
 * [x] namespace type
-* [x] JSX props support
+* [x] JSX props support (Finished but can not use)
 
 ## to do
 
