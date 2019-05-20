@@ -47,8 +47,16 @@ export const buildTypeDefination = (ref: UI5APIRef) => {
   writeFileSync(path.join(__dirname, `../bin/${ref.library}.d.ts`), typeString, { encoding: "UTF-8" })
 }
 
+const JSXDecleration = `
+declare namespace JSX {
+  interface ElementAttributesProperty {
+    props; // specify the property name to use
+  }
+}
+`
+
 export const writeIndexDTS = (libs: string[]) => {
-  writeFileSync(path.join(__dirname, "../bin/index.d.ts"), libs.map(l => `import "./${l}"`).join("\n"), { encoding: "UTF-8" })
+  writeFileSync(path.join(__dirname, "../bin/index.d.ts"), (libs.map(l => `import "./${l}"`).join("\n") + JSXDecleration), { encoding: "UTF-8" })
 }
 
 const ui5_host = "openui5.hana.ondemand.com"

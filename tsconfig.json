@@ -2,7 +2,8 @@
     "compilerOptions": {
         "newLine": "LF",
         "charset": "UTF-8",
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "jsx": "preserve"
     },
     "exclude": [
         "./builder/templates/*.ts"
