@@ -1,5 +1,5 @@
 
-import { UI5Symbol, Kind, Method, MethodParameter } from './types';
+import { UI5Symbol, Kind, Method, MethodParameter, Ui5Metadata } from './types';
 import { readFileSync } from "fs";
 import * as path from "path";
 import * as Handlebars from "handlebars";
@@ -33,13 +33,23 @@ Handlebars.registerHelper("extractImportClassName", (m: string) => {
     return `Imported${m.split("/").pop()}`
 })
 
+Handlebars.registerHelper("formatImportReactComponent", (base: string) => {
+    if (base == "Object") {
+        return `import { Component } from "react"`
+    }
+    return ""
+})
+
 Handlebars.registerHelper("formatBaseName", (base: string) => {
+    if (base == "Object") {
+        return "Object extends Component"
+    }
     return base.split(/\.|\//).pop()
 })
 
 Handlebars.registerHelper("formatDefault", (name: string, cName: string) => {
     const moduleName = name.split(/\.|\//).pop()
-    // a pacakge but not a class
+    // a package but not a class
     if (moduleName.toLowerCase() == moduleName) {
         return ""
     } else {
@@ -165,6 +175,34 @@ const formatReturnType = (m: string) => {
     }
 }
 
+const formatClassProps = (m: Ui5Metadata): string => {
+    var rt = "any"
+    if (m) {
+        var items = []
+
+        if (m.properties) {
+            m.properties.forEach(p => {
+                items.push(`${p.name}: ${formatModuleName(p.type)}`)
+            })
+        }
+        if (m.aggregations) {
+            m.aggregations.forEach(a => {
+                items.push(`${a.name}: ${formatModuleName(a.type)}`)
+            })
+        }
+        if (m.associations) {
+            m.associations.forEach(a => {
+                items.push(`${a.name}: ${formatModuleName(a.type)}`)
+            })
+        }
+        rt = `{\n\t\t${items.join(", \n\t\t")}}`
+    }
+
+    return rt
+}
+
+Handlebars.registerHelper("formatClassProps", formatClassProps)
+
 Handlebars.registerHelper("formatReturnType", formatReturnType)
 
 Handlebars.registerHelper("formatLastPart", (m: string) => {
@@ -233,6 +271,8 @@ export const formatClassString = (s: UI5Symbol) => {
             }
             return m
         })
+        s["metadata"] = s["ui5-metadata"]
     }
+
     return templates.classTemplate({ ...s, imports: analysisDependencies(s) })
 }

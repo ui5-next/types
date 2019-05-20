@@ -10,7 +10,6 @@ export const analysisDependencies = (s: UI5Symbol): string[] => {
     mName = trimEnd(mName, "[]")
     mName = mName.replace("Promise.", "Promise")
     mName = mName.replace("Array.", "Array")
-
     mName = mName.replace(/\./g, "/")
 
     if (mName && mName.startsWith("Promise<") && (!mName.startsWith("Promise|"))) {

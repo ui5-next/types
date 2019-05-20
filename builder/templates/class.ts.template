@@ -9,7 +9,7 @@ declare module '{{formatNameSpaceToModule name}}' {
     * {{{formatDescription description}}}
     * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
     */
-  export default class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}}{{/if}} {
+  export default class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}} {{/if}} {
 
     {{#each methods}}
     /**
