@@ -8,7 +8,8 @@
     "build": "ts-node ./builder/builder",
     "test": "jest",
     "test:cov": "jest && codecov",
-    "publish:tag": "npm publish --access public --tag latest"
+    "publish:tag": "npm publish --access public --tag latest",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
