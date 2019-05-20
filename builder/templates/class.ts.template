@@ -17,7 +17,7 @@ declare module '{{formatNameSpaceToModule name}}' {
       {{#if href}}* @see [document](https://openui5.hana.ondemand.com/{{href}}{{/if}})
       {{#if since}}* @since {{since}}{{/if}}
       */
-    {{#if static}} static{{/if}} {{{formatClassMethodName name}}}({{#each parameters}}{{#unless phoneName}}{{{name}}}, {{/unless}}{{/each}}...objects) : {{{formatReturnType returnValue.type}}};
+    {{#if static}} static{{/if}} {{{formatClassMethodName name}}}({{{formatParameters parameters}}}) : {{{formatReturnType returnValue.type}}};
 
     {{/each}}
 

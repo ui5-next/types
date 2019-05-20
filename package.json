@@ -1,6 +1,6 @@
 {
   "name": "@ui5-next/types",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": false,
   "description": "openui5 types",
   "main": "index.js",
@@ -40,7 +40,7 @@
     "@types/jest": "^24.0.11",
     "@types/lodash": "^4.14.123",
     "@types/node": "^11.11.3",
-    "handlebars": "^4.1.1",
+    "handlebars": "^4.1.2",
     "jest": "^24.1.0",
     "lodash": "^4.17.11",
     "node-fetch": "^2.3.0",

@@ -1,5 +1,5 @@
 
-import { UI5Symbol, Kind, Method } from './types';
+import { UI5Symbol, Kind, Method, MethodParameter } from './types';
 import { readFileSync } from "fs";
 import * as path from "path";
 import * as Handlebars from "handlebars";
@@ -7,6 +7,7 @@ import * as TurnDownService from "turndown";
 import { analysisDependencies } from './dependencies';
 import { upperFirst, trimStart, trimEnd, } from "lodash";
 import { NotExistedTypes } from './not_existed_type';
+import { skipMethods } from './wrong_extend_methods';
 
 const turnDownService = new TurnDownService()
 
@@ -18,7 +19,7 @@ const loadTemplate = (p: string) => Handlebars.compile(
  * templates
  */
 const templates = {
-    classTempalete: loadTemplate("./templates/class.ts.template"),
+    classTemplate: loadTemplate("./templates/class.ts.template"),
     enumTemplate: loadTemplate("./templates/enum.ts.template"),
     typeTemplate: loadTemplate("./templates/types.ts.template"),
     nsTypeTemplate: loadTemplate("./templates/ns.type.ts.template"),
@@ -35,7 +36,6 @@ Handlebars.registerHelper("extractImportClassName", (m: string) => {
 Handlebars.registerHelper("formatBaseName", (base: string) => {
     return base.split(/\.|\//).pop()
 })
-
 
 Handlebars.registerHelper("formatDefault", (name: string, cName: string) => {
     const moduleName = name.split(/\.|\//).pop()
@@ -63,8 +63,12 @@ Handlebars.registerHelper("formatDescription", (d: string) => {
 
 const formatModuleName = (m: string) => {
 
+    m = m.trim()
     m = trimStart(m, "module:")
     m = m.replace("Promise.", "Promise")
+    m = m.replace("Array.", "Array")
+    m = m.replace("Object.", "Map")
+
     if (NotExistedTypes.includes(m.replace(/\//g, "."))) {
         return "any"
     } else if (m.startsWith("Promise<")) {
@@ -81,12 +85,21 @@ const formatModuleName = (m: string) => {
         } else {
             return "Array<any>"
         }
+    } else if (m.startsWith("Map<")) {
+        const regResult = /Map\<(.*?)\>/.exec(m);
+        if (regResult) {
+            return `Map<${regResult[1].split(",").map(p => p.trim()).map(formatModuleName).join(",")}>`
+        } else {
+            return "Map<any>"
+        }
+    } else if (m.indexOf("|") > 0) {
+        return m.split("|").map(formatModuleName).join(" | ")
     } else if (m.startsWith("jQuery")) {
         return "any"
-    } else if (m.startsWith("sap")) {
-        return `Imported${m.split(/\.|\//g).map(upperFirst).join("")}`
     } else if (m.endsWith("[]")) {
         return `${formatModuleName(trimEnd(m, "[]"))}[]`
+    } else if (m.startsWith("sap")) {
+        return `Imported${m.split(/\.|\//g).map(upperFirst).join("")}`
     } else {
         switch (m) {
             case "int":
@@ -101,11 +114,23 @@ const formatModuleName = (m: string) => {
             case "ndefined":
                 return "undefined";
             case "function":
+            case "function()":
                 return "Function"
             case "array":
                 return "Array<any>"
+            case "ManageObject":
+                return formatModuleName("sap.ui.base.ManagedObject")
             case "ControlSelector":
                 return formatModuleName("sap.ui.test.RecordReplay.ControlSelector")
+            case "List":
+            case "Item":
+            case "Uploader":
+            case "FileUploader":
+                return "any"
+            case "UploadSetItem":
+                return formatModuleName("sap.m.upload.UploadSetItem")
+            case "UploadSet":
+                return formatModuleName("sap.m.upload.UploadSet")
             case "int[]":
             case "float[]":
                 return "number[]"
@@ -120,6 +145,10 @@ const formatModuleName = (m: string) => {
                 return "Array<any>"
             case "function()":
                 return "Function"
+            case "Map":
+            case "Object.<string,function()>":
+            case "Object.<string,string>":
+                return "Map<any, any>"
             default:
                 return m
         }
@@ -130,28 +159,7 @@ Handlebars.registerHelper("formatModuleName", formatModuleName)
 
 const formatReturnType = (m: string) => {
     if (m) {
-        if (m.startsWith("Array.")) {
-            m = m.replace("Array.", "Array")
-        }
-        if (m.startsWith("Promise") && (!m.startsWith("Promise|")) && m.indexOf("|") > 0) {
-            const regResult = /Promise\.?\<(.*?)\>/.exec(m);
-            if (regResult) {
-                return `Promise<${formatReturnType(regResult[1])}>`
-            } else {
-                return "Promise<any>"
-            }
-        } else if (m.startsWith("Array") && (!m.startsWith("Array|")) && m.indexOf("|") > 0) {
-            const regResult = /Array\.?\<(.*?)\>/.exec(m);
-            if (regResult) {
-                return `Array<${formatReturnType(regResult[1])}>`
-            } else {
-                return "Array<any>"
-            }
-        } else if (m.endsWith("[]")) {
-            return `${formatReturnType(trimEnd(m, "[]"))}[]`
-        } else {
-            return `${m.split("|").map(formatModuleName).join("|")}`
-        }
+        return formatModuleName(m)
     } else {
         return "any"
     }
@@ -169,6 +177,22 @@ Handlebars.registerHelper("formatNameSpaceToClassName", (m: string) => {
 
 Handlebars.registerHelper("formatClassMethodName", (n: string) => {
     return n.split(".").pop()
+})
+
+Handlebars.registerHelper("formatParameters", (parameters: MethodParameter[]) => {
+    if (parameters) {
+        var rt = []
+        parameters.forEach(parameter => {
+            if (!parameter.phoneName) {
+                rt.push(`${parameter.name}: ${parameter.types.map(v => formatModuleName(v.value)).join(" | ")}`)
+            }
+        })
+        rt.push("...objects")
+        return rt.join(", ")
+
+    } else {
+        return "...objects"
+    }
 })
 
 /**
@@ -196,22 +220,7 @@ export const formatClassString = (s: UI5Symbol) => {
     if (s.extends && !s.extends.startsWith("sap")) {
         delete s.extends
     }
-    // those method return type will be any
-    // because there parameters are different in parent-class & sub-class
-    const skipMethods = [
-        "sap.ui.base.Object.defineClass",
-        "parseValue",
-        "setVisible",
-        "getDomRef",
-        "getControlMessages",
-        "clone",
-        "setDatetime",
-        "getTooltip",
-        "setValue",
-        "getValue",
-        "setAuthorPicture",
-        "setPriority",
-    ]
+
 
     if (s.methods) {
         s.methods = s.methods.filter(m => !((s.basename != "Object") && m.name.endsWith("getMetadata")))
@@ -219,8 +228,11 @@ export const formatClassString = (s: UI5Symbol) => {
             if (m.returnValue && skipMethods.includes(m.name)) {
                 m.returnValue.type = "any"
             }
+            if (m.parameters && skipMethods.includes(m.name)) {
+                m.parameters.forEach(p => { p.types = [{ value: "any" }] })
+            }
             return m
         })
     }
-    return templates.classTempalete({ ...s, imports: analysisDependencies(s) })
+    return templates.classTemplate({ ...s, imports: analysisDependencies(s) })
 }
