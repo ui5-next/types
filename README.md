@@ -11,7 +11,7 @@ Provide ES6 UI5 types definition. To support vscode `Code IntelliSense`.
 * [x] class
 * [x] class method
 * [x] class static method
-* [ ] class constructor
+* [x] class constructor
 * [x] class method parameters type
 * [x] class method return type
 * [x] enums

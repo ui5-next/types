@@ -13,7 +13,7 @@ declare module '{{formatNameSpaceToModule name}}' {
     */
   export default class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}} {{/if}} {
     
-    props: Props
+    constructor(props: Props)
 
     {{#each methods}}
     /**
