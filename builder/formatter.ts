@@ -60,13 +60,15 @@ Handlebars.registerHelper("formatDefault", (name: string, cName: string) => {
     }
 })
 
-Handlebars.registerHelper("formatDescription", (d: string) => {
+const formatDescription = (d: string) => {
     try {
         return turnDownService.turndown(d)
     } catch (error) {
         return d
     }
-})
+}
+
+Handlebars.registerHelper("formatDescription", formatDescription)
 
 const formatModuleName = (m: string) => {
 
@@ -173,19 +175,18 @@ const formatReturnType = (m: string) => {
 }
 
 const formatClassProps = (s: UI5Symbol): string => {
+
     var rt = "interface Props { }"
     var items = []
+
+    const formatComment = (obj) => {
+        return `/**\n\t\t* ${formatDescription(obj.description || "")}\n\t\t**/`
+    }
 
     // interface with function can not process
     if (s.events) {
         s.events.forEach(e => {
-            // if (e.parameters) {
-            //     items.push(`${e.name}: (${e.parameters.map(p => `${p.name}`).join(", ")}) => any`)
-            //     // items.push(`${e.name}: (${e.parameters.map(p => `${p.name}: ${formatModuleName(p.type)}`).join(", ")}) => any`)
-            // } else {
-            //     items.push(`${e.name}: (...parameters) => any`)
-            // }
-            items.push(`${e.name}: any`)
+            items.push(`${formatComment(e)}\n\t\t${e.name}: any`)
         })
     }
 
@@ -195,17 +196,21 @@ const formatClassProps = (s: UI5Symbol): string => {
 
         if (m.properties) {
             m.properties.forEach(p => {
-                items.push(`${p.name}: ${formatModuleName(p.type)}`)
+
+                items.push(`${formatComment(p)}\n\t\t${p.name}: ${formatModuleName(p.type)}`)
             })
         }
         if (m.aggregations) {
+
             m.aggregations.forEach(a => {
-                items.push(`${a.name}: ${formatModuleName(a.type)}`)
+
+                items.push(`${formatComment(a)}\n\t\t${a.name}: ${formatModuleName(a.type)}`)
             })
         }
         if (m.associations) {
             m.associations.forEach(a => {
-                items.push(`${a.name}: ${formatModuleName(a.type)}`)
+
+                items.push(`${formatComment(a)}\n\t\t${a.name}: ${formatModuleName(a.type)}`)
             })
         }
 
