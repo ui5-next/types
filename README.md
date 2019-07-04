@@ -1,5 +1,6 @@
 # Open UI5 Types
 
+[![CircleCI](https://circleci.com/gh/ui5-next/types.svg?style=shield)](https://circleci.com/gh/ui5-next/types)
 ![npm (scoped)](https://img.shields.io/npm/v/@ui5-next/types.svg)
 
 Provide ES6 UI5 types definition. To support vscode `Code IntelliSense`.
@@ -18,7 +19,7 @@ Provide ES6 UI5 types definition. To support vscode `Code IntelliSense`.
 * [x] types
 * [x] interfaces
 * [x] namespace type
-* [x] JSX props support (Finished but can not use)
+* [x] JSX props support
 
 ## to do
 
