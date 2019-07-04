@@ -197,14 +197,14 @@ const formatClassProps = (s: UI5Symbol): string => {
         if (m.properties) {
             m.properties.forEach(p => {
 
-                items.push(`${formatComment(p)}\n\t\t${p.name}: ${formatModuleName(p.type)}`)
+                items.push(`${formatComment(p)}\n\t\t${p.name}: ${formatModuleName(p.type)}|PropertyBindingInfo`)
             })
         }
         if (m.aggregations) {
 
             m.aggregations.forEach(a => {
 
-                items.push(`${formatComment(a)}\n\t\t${a.name}: ${formatModuleName(a.type)}`)
+                items.push(`${formatComment(a)}\n\t\t${a.name}: ${formatModuleName(a.type)}|AggregationBindingInfo`)
             })
         }
         if (m.associations) {

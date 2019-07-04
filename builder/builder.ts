@@ -18,6 +18,8 @@ export const buildTypeDefination = (ref: UI5APIRef) => {
 
   typeString += `// Library: ${ref.library}\n`
 
+  typeString += `/// <reference path="./base.d.ts" />`
+
   ref.symbols.forEach(s => {
     switch (s.kind) {
       case Kind.Class:
