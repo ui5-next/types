@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/ui5-next/types/compare/v1.1.0...v1.1.1) (2019-07-04)
+
+
+### Bug Fixes
+
+* circle ci ([2a6b70c](https://github.com/ui5-next/types/commit/2a6b70c))
+
+
+
 ## 1.1.0 (2019-07-04)
 
 
