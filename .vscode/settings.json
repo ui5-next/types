@@ -2,5 +2,12 @@
     "editor.tabSize": 2,
     "editor.useTabStops": true,
     "editor.wordWrap": "on",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "cSpell.words": [
+        "apiref",
+        "designtime",
+        "hana",
+        "ondemand",
+        "themelib"
+    ]
 }

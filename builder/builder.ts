@@ -6,7 +6,11 @@ import { formatClassString, formatEnumString, formatTypeString, formatNsType, fo
 import * as fetch from "node-fetch";
 import { Ui5DistVersion, Library } from './ui5_dist_types';
 
-export const buildTypeDefination = (ref: UI5APIRef) => {
+const replaceLinkBase = (content = "", newBase = "") => {
+  return content.replace(/https:\/\/openui5\.hana\.ondemand\.com\//g, newBase)
+}
+
+export const buildTypeDefinitions = (ref: UI5APIRef) => {
 
   console.log(`Building type defination for ${ref.library}`)
 
@@ -46,10 +50,12 @@ export const buildTypeDefination = (ref: UI5APIRef) => {
     }
   })
 
+  typeString = replaceLinkBase(typeString, `https://openui5.hana.ondemand.com/${ref.version}/`)
+
   writeFileSync(path.join(__dirname, `../bin/${ref.library}.d.ts`), typeString, { encoding: "UTF-8" })
 }
 
-const JSXDecleration = `
+const JSXDeclaration = `
 declare namespace JSX {
   interface ElementAttributesProperty {
     props; // specify the property name to use
@@ -58,7 +64,7 @@ declare namespace JSX {
 `
 
 export const writeIndexDTS = (libs: string[]) => {
-  writeFileSync(path.join(__dirname, "../bin/index.d.ts"), (libs.map(l => `import "./${l}"`).join("\n") + JSXDecleration), { encoding: "UTF-8" })
+  writeFileSync(path.join(__dirname, "../bin/index.d.ts"), (libs.map(l => `import "./${l}"`).join("\n") + JSXDeclaration), { encoding: "UTF-8" })
 }
 
 const ui5_host = "openui5.hana.ondemand.com"
@@ -77,7 +83,7 @@ if (require.main === module) {
       Promise
         .all(libraries
           .map(formatApiRefURL)
-          .map(url => fetch(url).then(res => res.json()).then(buildTypeDefination).catch(console.error)))
+          .map(url => fetch(url).then(res => res.json()).then(buildTypeDefinitions).catch(console.error)))
         .then(() => {
           writeIndexDTS(libraries.map(library => library.name))
         })
