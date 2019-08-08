@@ -50,7 +50,7 @@ export const buildTypeDefinitions = (ref: UI5APIRef) => {
     }
   })
 
-  typeString = replaceLinkBase(typeString, `https://openui5.hana.ondemand.com/${ref.version}/`)
+  typeString = replaceLinkBase(typeString, `https://openui5-mirror-cd-1251425453.file.myqcloud.com/openui5-sdk-${ref.version}/`)
 
   writeFileSync(path.join(__dirname, `../bin/${ref.library}.d.ts`), typeString, { encoding: "UTF-8" })
 }

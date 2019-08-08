@@ -10,6 +10,7 @@ declare module '{{formatNameSpaceToModule name}}' {
   /**
     * {{{formatDescription description}}}
     * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
+    * @see [examples](https://openui5.hana.ondemand.com/#/entity/{{{name}}})
     */
   export default class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}} {{/if}} {
     
