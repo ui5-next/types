@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/ui5-next/types/compare/v1.2.0...v1.2.1) (2019-08-08)
+
+
+### Bug Fixes
+
+* **ci:** tests ([425f8a0](https://github.com/ui5-next/types/commit/425f8a0))
+
+
+
 ## [1.2.0](https://github.com/ui5-next/types/compare/v1.1.2...v1.2.0) (2019-08-08)
 
 
