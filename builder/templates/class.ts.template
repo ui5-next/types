@@ -16,6 +16,8 @@ declare module '{{formatNameSpaceToModule name}}' {
     
     constructor(props: Props)
 
+    props: Props
+
     {{#each methods}}
     /**
       * {{{formatDescription description}}}
