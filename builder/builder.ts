@@ -12,7 +12,7 @@ const replaceLinkBase = (content = "", newBase = "") => {
 
 export const buildTypeDefinitions = (ref: UI5APIRef) => {
 
-  console.log(`Building type defination for ${ref.library}`)
+  console.log(`Building type definition for ${ref.library}`)
 
   var typeString = ""
 
