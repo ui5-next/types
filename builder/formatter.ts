@@ -186,7 +186,7 @@ const formatClassProps = (s: UI5Symbol): string => {
     // interface with function can not process
     if (s.events) {
         s.events.forEach(e => {
-            items.push(`${formatComment(e)}\n\t\t${e.name}: any`)
+            items.push(`${formatComment(e)}\n\t\t${e.name}?: any`)
         })
     }
 
@@ -197,20 +197,20 @@ const formatClassProps = (s: UI5Symbol): string => {
         if (m.properties) {
             m.properties.forEach(p => {
 
-                items.push(`${formatComment(p)}\n\t\t${p.name}: ${formatModuleName(p.type)}|PropertyBindingInfo`)
+                items.push(`${formatComment(p)}\n\t\t${p.name}?: ${formatModuleName(p.type)}|PropertyBindingInfo`)
             })
         }
         if (m.aggregations) {
 
             m.aggregations.forEach(a => {
 
-                items.push(`${formatComment(a)}\n\t\t${a.name}: ${formatModuleName(a.type)}|AggregationBindingInfo`)
+                items.push(`${formatComment(a)}\n\t\t${a.name}?: ${formatModuleName(a.type)}|AggregationBindingInfo`)
             })
         }
         if (m.associations) {
             m.associations.forEach(a => {
 
-                items.push(`${formatComment(a)}\n\t\t${a.name}: ${formatModuleName(a.type)}`)
+                items.push(`${formatComment(a)}\n\t\t${a.name}?: ${formatModuleName(a.type)}`)
             })
         }
 
