@@ -1,7 +1,7 @@
 # Open UI5 Types
 
 [![CircleCI](https://circleci.com/gh/ui5-next/types.svg?style=shield)](https://circleci.com/gh/ui5-next/types)
-![npm (scoped)](https://img.shields.io/npm/v/@ui5-next/types.svg)
+[![npm (scoped)](https://img.shields.io/npm/v/@ui5-next/types.svg)](https://www.npmjs.com/package/@ui5-next/types)
 
 Provide ES6 UI5 types definition. To support vscode `Code IntelliSense`.
 
