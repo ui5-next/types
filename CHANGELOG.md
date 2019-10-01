@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/ui5-next/types/compare/v1.3.3...v1.4.0) (2019-10-01)
+
+
+### Features
+
+* optional props elements ([61e6a2f](https://github.com/ui5-next/types/commit/61e6a2f))
+
+
+
 ### [1.3.3](https://github.com/ui5-next/types/compare/v1.3.2...v1.3.3) (2019-08-23)
 
 
