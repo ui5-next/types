@@ -14,5 +14,6 @@ export const NotExistedTypes = [
   "sap.ui.core.dnd.DragSession",
   "sap.m.SinglePlanningCalendarGrid",
   "sap.m.PlanningCalendarHeader",
-  "sap.m.TimePickerSlider"
+  "sap.m.TimePickerSlider",
+  "sap.ui.layout.ResponsiveSplitterPage"
 ]

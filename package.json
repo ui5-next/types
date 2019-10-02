@@ -1,6 +1,6 @@
 {
   "name": "@ui5-next/types",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "private": false,
   "description": "openui5 types",
   "main": "index.js",
@@ -8,10 +8,10 @@
   "scripts": {
     "release": "standard-version --commit-all --no-verify && git push --follow-tags origin master",
     "build": "ts-node ./builder/builder",
-    "test": "jest",
-    "test:cov": "jest && codecov",
+    "test": "jest && tsc --noEmit",
+    "test:cov": "npm run test && codecov",
     "publish:tag": "npm publish --access public --tag latest",
-    "prepare": "npm run build"
+    "prepare": "npm run build && npm run test"
   },
   "repository": {
     "type": "git",

@@ -78,9 +78,9 @@ if (require.main === module) {
     .then(res => res.json())
     .then((version: Ui5DistVersion) => {
       const libraries = version.libraries.filter(l => !l.name.startsWith("themelib") && l.name != "sap.ui.server.java")
-      console.log(`Building ui5 with version: ${version.version}`)
+      console.log(`Building ui5 type definition with version: ${version.version}`)
 
-      Promise
+      return Promise
         .all(libraries
           .map(formatApiRefURL)
           .map(url => fetch(url).then(res => res.json()).then(buildTypeDefinitions).catch(console.error)))
