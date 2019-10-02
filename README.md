@@ -72,3 +72,5 @@ export const NotExistedTypes = [
   "sap.ui.commons.form.SimpleFormLayout",
 ]
 ```
+
+## [CHANGELOG](./CHANGELOG.md)
