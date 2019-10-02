@@ -23,5 +23,13 @@ export const skipMethods = [
   "sort",
   "bindContext",
   "bindList",
+  "fireChange",
+  "setSelectedIndex",
+  "setSelectionInterval",
+  "setEnableGrouping",
+  "getContextByIndex",
+  "setGroupBy",
+  "selectAll",
+  "removeSelectionInterval",
   "sap.ui.core.mvc.XMLView.registerPreprocessor",
 ]

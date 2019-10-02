@@ -11,7 +11,7 @@
     "test": "jest && tsc --noEmit",
     "test:cov": "npm run test && codecov",
     "publish:tag": "npm publish --access public --tag latest",
-    "prepare": "npm run build"
+    "prepare": "npm run build && npm run test"
   },
   "repository": {
     "type": "git",

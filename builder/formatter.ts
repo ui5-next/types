@@ -126,16 +126,12 @@ const formatModuleName = (m: string) => {
             case "function()":
                 return "Function"
             case "array":
+            case "Array":
                 return "Array<any>"
             case "ManageObject":
                 return formatModuleName("sap.ui.base.ManagedObject")
             case "ControlSelector":
                 return formatModuleName("sap.ui.test.RecordReplay.ControlSelector")
-            case "List":
-            case "Item":
-            case "Uploader":
-            case "FileUploader":
-                return "any"
             case "UploadSetItem":
                 return formatModuleName("sap.m.upload.UploadSetItem")
             case "UploadSet":
@@ -143,21 +139,26 @@ const formatModuleName = (m: string) => {
             case "int[]":
             case "float[]":
                 return "number[]"
+            case "List":
+            case "Item":
+            case "Uploader":
+            case "FileUploader":
             case "ap":
             case "*":
             case "DOMRef":
             case "T":
             case "Ref":
             case "DomNode":
+            case "LayoutHistory":
                 return "any"
-            case "Array":
-                return "Array<any>"
             case "function()":
                 return "Function"
             case "Map":
             case "Object.<string,function()>":
             case "Object.<string,string>":
                 return "Map<any, any>"
+            case "Iterator":
+                return "Iterator<any>"
             case "{type:string,index:int}":
                 return "{ type: string, index: number }"
             default:
@@ -243,13 +244,34 @@ Handlebars.registerHelper("formatClassMethodName", (n: string) => {
 })
 
 Handlebars.registerHelper("formatParameters", (parameters: MethodParameter[]) => {
+
+
     if (parameters) {
-        var rt = []
+        let rt = []
+        let identifier_seq = 0;
+        const identifiers = new Set()
         parameters.forEach(parameter => {
-            parameter.name = parameter.name.replace(/\{|\}/g, "");
+
+            // with phone name, not a normal function parameter
             if (!parameter.phoneName) {
-                rt.push(`${parameter.name}: ${parameter.types.map(v => formatModuleName(v.value)).join(" | ")}`)
+
+                // remove non-alpha chars
+                let paramName = parameter.name.replace(/[\W_]+/g, "");
+
+                // avoid duplicate identifier in single method
+                if (identifiers.has(paramName)) {
+                    paramName = `${paramName}_${identifier_seq}`
+                    identifier_seq++
+                }
+
+                identifiers.add(paramName)
+
+                // make all params as optional, because some optional parameters are before than required parameter
+                // "A required parameter cannot follow an optional parameter.""
+                rt.push(`${paramName}?: ${parameter.types.map(v => formatModuleName(v.value)).join(" | ")}`)
+
             }
+
         })
         rt.push("...objects: any[]")
         return rt.join(", ")
