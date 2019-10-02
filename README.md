@@ -7,6 +7,19 @@ Provide ES6 UI5 types definition. To support vscode `Code IntelliSense`.
 
 ![](https://res.cloudinary.com/digf90pwi/image/upload/v1553674217/2019-03-27_16-09-03_mvqoz6.png)
 
+## how to
+
+1. npm install `@ui5-next/types@latest`
+1. include `@type` to `jsconfig`/`tsconfig` file
+
+```json
+{
+  "compilerOptions": {},
+  "include": ["src","./node_modules/@ui5-next/types/bin/index.d.ts"]
+}
+```
+
+
 ## types
 
 * [x] class
@@ -20,10 +33,10 @@ Provide ES6 UI5 types definition. To support vscode `Code IntelliSense`.
 * [x] interfaces
 * [x] namespace type
 * [x] JSX props support
+* [x] how to document
 
 ## to do
 
-* [ ] how to document
 * [ ] CI nightly build
 
 ## comments
@@ -53,6 +66,14 @@ export const skipMethods = [
   "sort",
   "bindContext",
   "bindList",
+  "fireChange",
+  "setSelectedIndex",
+  "setSelectionInterval",
+  "setEnableGrouping",
+  "getContextByIndex",
+  "setGroupBy",
+  "selectAll",
+  "removeSelectionInterval",
   "sap.ui.core.mvc.XMLView.registerPreprocessor",
 ]
 
@@ -60,7 +81,6 @@ export const skipMethods = [
 // so those types will be replace by 'any'
 export const NotExistedTypes = [
   "sap.m.IconTabBarSelectList",
-  "sap.m.P13nConditionOperation",
   "sap.ui.test.qunit",
   "sap.ui.core.support.Support",
   "appointmentsSorterCallback",
@@ -70,7 +90,14 @@ export const NotExistedTypes = [
   "sap.ui.fl.Change",
   "sap.ui.integration.CardActionType",
   "sap.ui.commons.form.SimpleFormLayout",
+  "sap.ui.core.dnd.DragSession",
+  "sap.m.SinglePlanningCalendarGrid",
+  "sap.m.PlanningCalendarHeader",
+  "sap.m.TimePickerSlider",
+  "sap.ui.layout.ResponsiveSplitterPage"
 ]
 ```
 
 ## [CHANGELOG](./CHANGELOG.md)
+
+## [LICENSE](./LICENSE)
