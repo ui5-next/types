@@ -158,6 +158,8 @@ const formatModuleName = (m: string) => {
             case "Object.<string,function()>":
             case "Object.<string,string>":
                 return "Map<any, any>"
+            case "{type:string,index:int}":
+                return "{ type: string, index: number }"
             default:
                 return m
         }
