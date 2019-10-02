@@ -58,7 +58,7 @@ export const buildTypeDefinitions = (ref: UI5APIRef) => {
 const JSXDeclaration = `
 declare namespace JSX {
   interface ElementAttributesProperty {
-    props; // specify the property name to use
+    props: any; // specify the property name to use
   }
 }
 `
