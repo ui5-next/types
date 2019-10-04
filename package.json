@@ -1,6 +1,6 @@
 {
   "name": "@ui5-next/types",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "private": false,
   "description": "openui5 types",
   "main": "index.js",
