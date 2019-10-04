@@ -198,8 +198,19 @@ const formatClassProps = (s: UI5Symbol): string => {
     }
 
     const m = s["ui5-metadata"]
+
     if (m) {
 
+        // ref https://github.com/ui5-next/types/issues/11
+        // Hard code to add props - id to the class Control
+        if (s.name=="sap.ui.core.Control") {
+            items.push(`/**
+    * Optional ID for the new control; generated automatically if no non-empty ID is given
+    * 
+    * **Note: this can be omitted, no matter whether mSettings will be given or not!**
+    */
+    id?: string`)
+        }
 
         if (m.properties) {
             m.properties.forEach(p => {
