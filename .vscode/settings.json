@@ -1,22 +1,23 @@
 {
-    "editor.tabSize": 2,
-    "editor.useTabStops": true,
-    "editor.wordWrap": "on",
-    "editor.formatOnSave": true,
-    "cSpell.ignorePaths": [
-        "**/package-lock.json",
-        "**/node_modules/**",
-        "**/vscode-extension/**",
-        "**/.git/objects/**",
-        ".vscode",
-        "**/bin/*.d.ts"
-    ],
-    "cSpell.words": [
-        "Theo",
-        "apiref",
-        "designtime",
-        "hana",
-        "ondemand",
-        "themelib"
-    ]
+  "editor.tabSize": 2,
+  "editor.useTabStops": true,
+  "editor.fontSize": 14,
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": false,
+  "cSpell.ignorePaths": [
+    "**/package-lock.json",
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/objects/**",
+    ".vscode",
+    "**/bin/*.d.ts"
+  ],
+  "cSpell.words": [
+    "Theo",
+    "apiref",
+    "designtime",
+    "hana",
+    "ondemand",
+    "themelib"
+  ]
 }

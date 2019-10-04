@@ -8,6 +8,7 @@ export const NotExistedTypes = [
   "sap.m.TextField",
   "sap.m.P13nConditionOperation",
   "DomRef",
+  "iScroll",
   "sap.ui.fl.Change",
   "sap.ui.integration.CardActionType",
   "sap.ui.commons.form.SimpleFormLayout",
@@ -15,5 +16,6 @@ export const NotExistedTypes = [
   "sap.m.SinglePlanningCalendarGrid",
   "sap.m.PlanningCalendarHeader",
   "sap.m.TimePickerSlider",
-  "sap.ui.layout.ResponsiveSplitterPage"
-]
+  "sap.ui.layout.ResponsiveSplitterPage",
+  "sap.ui.comp.smartvariants.SmartVariantManagement"
+];

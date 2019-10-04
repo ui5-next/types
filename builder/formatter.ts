@@ -23,6 +23,7 @@ const templates = {
     enumTemplate: loadTemplate("./templates/enum.ts.template"),
     typeTemplate: loadTemplate("./templates/types.ts.template"),
     nsTypeTemplate: loadTemplate("./templates/ns.type.ts.template"),
+    nsClassTemplate: loadTemplate("./templates/ns.class.ts.template")
 }
 
 Handlebars.registerHelper("formatNameSpaceToModule", (m: string) => {
@@ -99,7 +100,7 @@ const formatModuleName = (m: string) => {
         if (regResult) {
             return `Map<${regResult[1].split(",").map(p => p.trim()).map(formatModuleName).join(",")}>`
         } else {
-            return "Map<any>"
+            return "Map<any, any>"
         }
     } else if (m.indexOf("|") > 0) {
         return m.split("|").map(formatModuleName).join(" | ")
@@ -154,9 +155,12 @@ const formatModuleName = (m: string) => {
             case "function()":
                 return "Function"
             case "Map":
-            case "Object.<string,function()>":
-            case "Object.<string,string>":
+            case "Map<any>":
                 return "Map<any, any>"
+            case "Object.<string,function()>":
+                return "Map<string, Function>"
+            case "Object.<string,string>":
+                return "Map<string, string>"
             case "Iterator":
                 return "Iterator<any>"
             case "{type:string,index:int}":
@@ -298,6 +302,30 @@ export const formatNsType = (s: UI5Symbol) => {
 
 export const formatInterfaceString = (s: UI5Symbol) => {
     return templates.typeTemplate(s)
+}
+
+export const formatNsClassString = (s: UI5Symbol) => {
+    // it maybe extends from native js object
+    if (s.extends && !s.extends.startsWith("sap")) {
+        delete s.extends
+    }
+
+
+    if (s.methods) {
+        s.methods = s.methods.filter(m => !((s.basename != "Object") && m.name.endsWith("getMetadata")))
+        s.methods = s.methods.map(m => {
+            if (m.returnValue && skipMethods.includes(m.name)) {
+                m.returnValue.type = "any"
+            }
+            if (m.parameters && skipMethods.includes(m.name)) {
+                m.parameters.forEach(p => { p.types = [{ value: "any" }] })
+            }
+            return m
+        })
+        s["metadata"] = s["ui5-metadata"]
+    }
+
+    return templates.nsClassTemplate({ ...s, imports: analysisDependencies(s) })
 }
 
 
