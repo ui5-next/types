@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.3](https://github.com/ui5-next/types/compare/v1.4.2...v1.4.3) (2019-10-04)
+
+
+### Bug Fixes
+
+* 'id' not recognized as valid property [#11](https://github.com/ui5-next/types/issues/11) ([016560c](https://github.com/ui5-next/types/commit/016560c))
+
+
+
 ### [1.4.2](https://github.com/ui5-next/types/compare/v1.4.1...v1.4.2) (2019-10-04)
 
 
