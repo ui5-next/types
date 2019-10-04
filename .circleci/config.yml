@@ -23,7 +23,6 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm test
 
   deploy:
     working_directory: ~/repo
@@ -31,8 +30,6 @@ jobs:
       - image: circleci/node:8.9.1
     steps:
       - checkout
-      - run: npm install
-      - run: npm run test
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc

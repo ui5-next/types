@@ -7,11 +7,11 @@
   "typings": "./bin/index.d.ts",
   "scripts": {
     "release": "standard-version --commit-all --no-verify && git push --follow-tags origin master",
-    "build": "ts-node ./builder/builder",
+    "build": "ts-node ./builder/builder && npm run test",
     "test": "jest && tsc --noEmit",
     "test:cov": "npm run test && codecov",
     "publish:tag": "npm publish --access public --tag latest",
-    "prepare": "npm run build && npm run test"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
