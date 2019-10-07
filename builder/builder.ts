@@ -2,7 +2,7 @@
 import { UI5APIRef, Kind, Stereotype } from './types';
 import { writeFileSync } from "fs";
 import * as path from "path";
-import { formatClassString, formatEnumString, formatTypeString, formatNsType, formatInterfaceString, formatNsClassString } from './formatter';
+import { formatClassString, formatEnumString, formatTypeString, formatNsType, formatInterfaceString, formatNsClassString, formatPureNsNode, formatFunctionString } from './formatter';
 import * as fetch from "node-fetch";
 import { Ui5DistVersion, Library } from './ui5_dist_types';
 
@@ -36,16 +36,23 @@ export const buildTypeDefinitions = (ref: UI5APIRef) => {
         typeString += formatTypeString(s)
         break;
       case Kind.Namespace:
+        // need to combine different ns type here
         if (s["ui5-metadata"] && s["ui5-metadata"].stereotype == Stereotype.Datatype) {
           typeString += formatNsType(s)
         } else if (s.basename && s.export && s.visibility == "public" && s.basename == s.export) {
           typeString += formatEnumString(s)
         } else if (s.methods) {
           typeString += formatNsClassString(s);
+        } else {
+          // name space or empty
+          typeString += formatPureNsNode(s);
         }
         break;
       case Kind.Interface:
         typeString += formatInterfaceString(s)
+        break;
+      case Kind.Function:
+        typeString += formatFunctionString(s)
         break;
       default:
         break;

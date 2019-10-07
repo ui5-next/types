@@ -1,0 +1,6 @@
+
+declare module '{{formatNameSpaceToModule name}}' {
+  {{#each nodes}}
+  export * from '{{formatNameSpaceToModule name}}'
+  {{/each}}
+}

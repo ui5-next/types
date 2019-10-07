@@ -23,7 +23,9 @@ const templates = {
     enumTemplate: loadTemplate("./templates/enum.ts.template"),
     typeTemplate: loadTemplate("./templates/types.ts.template"),
     nsTypeTemplate: loadTemplate("./templates/ns.type.ts.template"),
-    nsClassTemplate: loadTemplate("./templates/ns.class.ts.template")
+    nsClassTemplate: loadTemplate("./templates/ns.class.ts.template"),
+    nsNodeTemplate: loadTemplate("./templates/ns.node.ts.template"),
+    funcTemplate :loadTemplate("./templates/func.ts.template")
 }
 
 Handlebars.registerHelper("formatNameSpaceToModule", (m: string) => {
@@ -203,7 +205,7 @@ const formatClassProps = (s: UI5Symbol): string => {
 
         // ref https://github.com/ui5-next/types/issues/11
         // Hard code to add props - id to the class Control
-        if (s.name=="sap.ui.core.Control") {
+        if (s.name == "sap.ui.core.Control") {
             items.push(`/**
     * Optional ID for the new control; generated automatically if no non-empty ID is given
     * 
@@ -256,6 +258,10 @@ Handlebars.registerHelper("formatNameSpaceToClassName", (m: string) => {
 
 Handlebars.registerHelper("formatClassMethodName", (n: string) => {
     return n.split(".").pop()
+})
+
+Handlebars.registerHelper("formatStandaloneFunctionName", (n: string) => {
+    return n.split("/").pop()
 })
 
 Handlebars.registerHelper("formatParameters", (parameters: MethodParameter[]) => {
@@ -315,13 +321,19 @@ export const formatInterfaceString = (s: UI5Symbol) => {
     return templates.typeTemplate(s)
 }
 
+export const formatFunctionString = (s: UI5Symbol) => {
+    return templates.funcTemplate(s)
+}
+
+export const formatPureNsNode = (s: UI5Symbol) => {
+    return templates.nsNodeTemplate(s)
+}
+
 export const formatNsClassString = (s: UI5Symbol) => {
     // it maybe extends from native js object
     if (s.extends && !s.extends.startsWith("sap")) {
         delete s.extends
     }
-
-
     if (s.methods) {
         s.methods = s.methods.filter(m => !((s.basename != "Object") && m.name.endsWith("getMetadata")))
         s.methods = s.methods.map(m => {
