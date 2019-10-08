@@ -1,5 +1,5 @@
 
-import { UI5Symbol, Kind, Method, MethodParameter, Ui5Metadata } from './types';
+import { UI5Symbol, Kind, Method, MethodParameter, Ui5Metadata, Stereotype } from './types';
 import { readFileSync } from "fs";
 import * as path from "path";
 import * as Handlebars from "handlebars";
@@ -25,7 +25,7 @@ const templates = {
     nsTypeTemplate: loadTemplate("./templates/ns.type.ts.template"),
     nsClassTemplate: loadTemplate("./templates/ns.class.ts.template"),
     nsNodeTemplate: loadTemplate("./templates/ns.node.ts.template"),
-    funcTemplate :loadTemplate("./templates/func.ts.template")
+    funcTemplate: loadTemplate("./templates/func.ts.template")
 }
 
 Handlebars.registerHelper("formatNameSpaceToModule", (m: string) => {
@@ -183,6 +183,19 @@ const formatReturnType = (m: string) => {
     }
 }
 
+const formatClassConstructor = (s: UI5Symbol): string => {
+    let rt = "constructor(...any: any[])"
+    const m = s["ui5-metadata"]
+    if (m) {
+        if (m.stereotype == Stereotype.Control || m.stereotype == Stereotype.Component) {
+            rt = "constructor(props?: Props)"
+        }
+    }
+    return rt;
+}
+
+Handlebars.registerHelper("formatClassConstructor", formatClassConstructor)
+
 const formatClassProps = (s: UI5Symbol): string => {
 
     var rt = "interface Props { }"
@@ -217,7 +230,7 @@ const formatClassProps = (s: UI5Symbol): string => {
         if (m.properties) {
             m.properties.forEach(p => {
 
-                items.push(`${formatComment(p)}\n\t\t${p.name}?: ${formatModuleName(p.type)}|PropertyBindingInfo`)
+                items.push(`${formatComment(p)}\n\t\t${p.name}?: ${formatModuleName(p.type)}|PropertyBindingInfo|ExpressionBindingInfo`)
             })
         }
         if (m.aggregations) {

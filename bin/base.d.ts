@@ -1,11 +1,16 @@
 export { };
 declare global {
 
+  /**
+   * Expression Binding Infomation
+   */
+  type ExpressionBindingInfo = string;
+
   interface BaseBindingInfo {
     /**
      * Path in the model to bind to, either an absolute path or relative to the binding context for the corresponding model; when the path contains a '>' sign, the string preceding it will override the model property and the remainder after the '>' will be used as binding path
      */
-    path: string;
+    path?: string;
     /**
      * Name of the model to bind against; when undefined or omitted, the default model is used
      */
