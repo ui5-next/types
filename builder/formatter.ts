@@ -225,6 +225,10 @@ const formatClassProps = (s: UI5Symbol): string => {
     * **Note: this can be omitted, no matter whether mSettings will be given or not!**
     */
     id?: string`)
+            items.push(`/**
+    * Static Class Style Name
+    */
+    class?: string`)
         }
 
         if (m.properties) {
