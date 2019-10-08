@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.7](https://github.com/ui5-next/types/compare/v1.4.6...v1.4.7) (2019-10-08)
+
+
+### Bug Fixes
+
+* consturctor for JSONModel ([be929e6](https://github.com/ui5-next/types/commit/be929e6))
+
+
+
 ### [1.4.6](https://github.com/ui5-next/types/compare/v1.4.5...v1.4.6) (2019-10-08)
 
 
