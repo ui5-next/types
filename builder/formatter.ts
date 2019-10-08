@@ -196,6 +196,12 @@ const formatClassConstructor = (s: UI5Symbol): string => {
 
 Handlebars.registerHelper("formatClassConstructor", formatClassConstructor)
 
+const withUIControl = (s: UI5Symbol, cb: (s: UI5Symbol) => void) => {
+    if (s && s["ui5-metadata"] && s["ui5-metadata"].stereotype == Stereotype.Control) {
+        cb(s)
+    }
+}
+
 const formatClassProps = (s: UI5Symbol): string => {
 
     var rt = "interface Props { }"
@@ -264,6 +270,22 @@ const formatClassProps = (s: UI5Symbol): string => {
 Handlebars.registerHelper("formatClassProps", formatClassProps)
 
 Handlebars.registerHelper("formatReturnType", formatReturnType)
+
+Handlebars.registerHelper("formatClassGenericTag", (s: UI5Symbol) => {
+    let rt = ""
+    withUIControl(s, () => {
+        rt = "<T = {}>"
+    })
+    return rt
+})
+
+Handlebars.registerHelper("formatClassPropsDefinition", (s: UI5Symbol) => {
+    let rt = ""
+    withUIControl(s, () => {
+        rt = "props: Props & T"
+    })
+    return rt
+})
 
 Handlebars.registerHelper("formatLastPart", (m: string) => {
     return m.split(/\.|\//).pop()

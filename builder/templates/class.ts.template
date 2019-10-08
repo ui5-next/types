@@ -12,11 +12,11 @@ declare module '{{formatNameSpaceToModule name}}' {
     * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
     * @see [examples](https://openui5.hana.ondemand.com/#/entity/{{{name}}})
     */
-  export default class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}} {{/if}} {
+  export default class {{formatBaseName basename}}{{{formatClassGenericTag this}}} {{#if extends}}extends {{formatModuleName extends}} {{/if}} {
     
     {{{formatClassConstructor this}}}
     
-    props: Props
+    {{{formatClassPropsDefinition this}}}
 
     {{#each methods}}
     /**
