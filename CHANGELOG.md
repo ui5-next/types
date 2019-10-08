@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.9](https://github.com/ui5-next/types/compare/v1.4.8...v1.4.9) (2019-10-08)
+
+
+### Bug Fixes
+
+* type inhert from control ([13463b3](https://github.com/ui5-next/types/commit/13463b3))
+
+
+
 ### [1.4.8](https://github.com/ui5-next/types/compare/v1.4.7...v1.4.8) (2019-10-08)
 
 
