@@ -185,12 +185,9 @@ const formatReturnType = (m: string) => {
 
 const formatClassConstructor = (s: UI5Symbol): string => {
     let rt = "constructor(...any: any[])"
-    const m = s["ui5-metadata"]
-    if (m) {
-        if (m.stereotype == Stereotype.Control || m.stereotype == Stereotype.Component) {
-            rt = "constructor(props?: Props)"
-        }
-    }
+    withUIControl(s, () => {
+        rt = "constructor(props?: Props & T)"
+    })
     return rt;
 }
 
