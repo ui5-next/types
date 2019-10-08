@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.10](https://github.com/ui5-next/types/compare/v1.4.9...v1.4.10) (2019-10-08)
+
+
+### Bug Fixes
+
+* jsx props inhert ([5a1032d](https://github.com/ui5-next/types/commit/5a1032d))
+
+
+
 ### [1.4.9](https://github.com/ui5-next/types/compare/v1.4.8...v1.4.9) (2019-10-08)
 
 
