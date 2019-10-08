@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.11](https://github.com/ui5-next/types/compare/v1.4.10...v1.4.11) (2019-10-08)
+
+
+### Bug Fixes
+
+* enum export ([172e0bd](https://github.com/ui5-next/types/commit/172e0bd))
+
+
+
 ### [1.4.10](https://github.com/ui5-next/types/compare/v1.4.9...v1.4.10) (2019-10-08)
 
 
