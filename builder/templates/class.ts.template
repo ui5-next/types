@@ -14,8 +14,7 @@ declare module '{{formatNameSpaceToModule name}}' {
     */
   export default class {{formatBaseName basename}} {{#if extends}}extends {{formatModuleName extends}} {{/if}} {
     
-    constructor(props?: Props)
-    constructor(...any: any[])
+    constructor(props?: Props, ...any: any[])
     
     props: Props
 
