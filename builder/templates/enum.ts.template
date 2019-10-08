@@ -5,7 +5,7 @@ declare module '{{formatNameSpaceToModule name}}' {
     * {{{formatDescription description}}}
     * @see [document](https://openui5.hana.ondemand.com/#/api/{{{name}}})
     */
-  export enum {{formatBaseName basename}} {
+  enum {{formatBaseName basename}} {
 
     {{#each properties}}
     /**
