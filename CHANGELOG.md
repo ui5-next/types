@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.12](https://github.com/ui5-next/types/compare/v1.4.11...v1.4.12) (2019-10-24)
+
+
+### Bug Fixes
+
+* class extends from element lost props ([37a3275](https://github.com/ui5-next/types/commit/37a3275))
+
+
+
 ### [1.4.11](https://github.com/ui5-next/types/compare/v1.4.10...v1.4.11) (2019-10-08)
 
 
