@@ -194,7 +194,7 @@ const formatClassConstructor = (s: UI5Symbol): string => {
 Handlebars.registerHelper("formatClassConstructor", formatClassConstructor)
 
 const withUIControl = (s: UI5Symbol, cb: (s: UI5Symbol) => void) => {
-    if (s && s["ui5-metadata"] && s["ui5-metadata"].stereotype == Stereotype.Control) {
+    if (s && s["ui5-metadata"] && (s["ui5-metadata"].stereotype == Stereotype.Control || s["ui5-metadata"].stereotype == Stereotype.Element)) {
         cb(s)
     }
 }
