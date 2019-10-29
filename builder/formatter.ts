@@ -63,9 +63,9 @@ Handlebars.registerHelper("formatDefault", (name: string, cName: string) => {
     }
 })
 
-const formatDescription = (d: string) => {
+const formatDescription = (d: string, resource = "https://openui5.hana.ondemand.com/resources/") => {
     try {
-        return turnDownService.turndown(d)
+        return turnDownService.turndown(d) || ""
     } catch (error) {
         return d
     }

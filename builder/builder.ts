@@ -7,7 +7,11 @@ import * as fetch from "node-fetch";
 import { Ui5DistVersion, Library } from './ui5_dist_types';
 
 const replaceLinkBase = (content = "", newBase = "") => {
-  return content.replace(/https:\/\/openui5\.hana\.ondemand\.com\//g, newBase)
+  return content
+    .replace(/https:\/\/openui5\.hana\.ondemand\.com\//g, newBase)
+    .replace(/\.\/resources\//g, `https://openui5.hana.ondemand.com/resources/`)  // replace relative reference
+    .replace(/\(\#\/api\/(.*?)\)/g, "(https://openui5.hana.ondemand.com/#/api/$1)")
+
 }
 
 export const buildTypeDefinitions = (ref: UI5APIRef) => {
