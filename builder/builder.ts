@@ -14,7 +14,38 @@ const replaceLinkBase = (content = "", newBase = "") => {
 
 }
 
-export const buildTypeDefinitions = (ref: UI5APIRef) => {
+const checkResourceExist = async (url) => {
+  const response = await fetch(url, { method: "HEAD" })
+  return response.status == 200
+}
+
+const getMainVersion = (s = "") => {
+  let parts = s.split(".")
+  parts.pop()
+  parts.push("0")
+  return parts.join(".")
+}
+
+const getDocumentBase = async (version = "") => {
+  // default to current version
+  let rt = `https://openui5.hana.ondemand.com/${version}/`
+  let versionDocExist = await checkResourceExist(`${rt}index.html`)
+  if (versionDocExist) {
+    return rt
+  }
+  // fallback to main version
+  rt = `https://openui5.hana.ondemand.com/${await getMainVersion(version)}/`
+  versionDocExist = await checkResourceExist(`${rt}index.html`)
+  if (versionDocExist) {
+    return rt
+  }
+
+  // fallback
+  return "https://openui5.hana.ondemand.com/"
+
+}
+
+export const buildTypeDefinitions = (docLinkBase = "https://openui5.hana.ondemand.com/") => (ref: UI5APIRef) => {
 
   console.log(`Building type definition for ${ref.library}`)
 
@@ -63,9 +94,10 @@ export const buildTypeDefinitions = (ref: UI5APIRef) => {
     }
   })
 
-  typeString = replaceLinkBase(typeString, `https://openui5.hana.ondemand.com/${ref.version}/`)
+  typeString = replaceLinkBase(typeString, docLinkBase)
 
   writeFileSync(path.join(__dirname, `../bin/${ref.library}.d.ts`), typeString, { encoding: "UTF-8" })
+
 }
 
 const JSXDeclaration = `
@@ -87,22 +119,19 @@ const formatApiRefURL = (lib: Library) => `https://${ui5_host}/test-resources/${
 // MAIN process
 if (require.main === module) {
 
-  fetch(`https://${ui5_host}/resources/sap-ui-version.json`)
-    .then(res => res.json())
-    .then((version: Ui5DistVersion) => {
+  (
+    async () => {
+      const response = await fetch(`https://${ui5_host}/resources/sap-ui-version.json`);
+      const version: Ui5DistVersion = await response.json()
       const libraries = version.libraries.filter(l => !l.name.startsWith("themelib") && l.name != "sap.ui.server.java")
       console.log(`Building ui5 type definition with version: ${version.version}`)
 
-      return Promise
-        .all(libraries
-          .map(formatApiRefURL)
-          .map(url => fetch(url).then(res => res.json()).then(buildTypeDefinitions).catch(console.error)))
-        .then(() => {
-          writeIndexDTS(libraries.map(library => library.name))
-        })
+      const dtsBuilder = buildTypeDefinitions(await getDocumentBase(version.version))
+      await Promise.all(libraries.map(formatApiRefURL).map(url => fetch(url).then(res => res.json()).then(dtsBuilder).catch(console.error)))
+      writeIndexDTS(libraries.map(library => library.name))
 
-
-    })
+    }
+  )()
 
 }
 
