@@ -42,7 +42,7 @@
     "@types/jest": "^24.0.11",
     "@types/lodash": "^4.14.123",
     "@types/node": "^11.11.3",
-    "handlebars": "^4.4.0",
+    "handlebars": "^4.5.2",
     "jest": "^24",
     "lodash": "^4",
     "node-fetch": "^2",
