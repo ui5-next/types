@@ -17,5 +17,7 @@ export const NotExistedTypes = [
   "sap.m.PlanningCalendarHeader",
   "sap.m.TimePickerSlider",
   "sap.ui.layout.ResponsiveSplitterPage",
-  "sap.ui.comp.smartvariants.SmartVariantManagement"
+  "sap.ui.comp.smartvariants.SmartVariantManagement",
+  "sap.ui.commons.TitleLevel",
+  "sap.m.LigthBox"
 ];

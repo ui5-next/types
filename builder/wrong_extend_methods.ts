@@ -11,6 +11,7 @@ export const skipMethods = [
   "setDatetime",
   "getTooltip",
   "setValue",
+  "getSelectedIndex",
   "getValue",
   "setAuthorPicture",
   "setPriority",

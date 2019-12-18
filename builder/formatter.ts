@@ -139,6 +139,9 @@ const formatModuleName = (m: string) => {
                 return formatModuleName("sap.m.upload.UploadSetItem")
             case "UploadSet":
                 return formatModuleName("sap.m.upload.UploadSet")
+            case "sap/ui/core/ComponentContainer)":
+            case "sap.ui.core.ComponentContainer)":
+                return formatModuleName("sap.ui.core.ComponentContainer")
             case "int[]":
             case "float[]":
                 return "number[]"

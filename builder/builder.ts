@@ -112,22 +112,24 @@ export const writeIndexDTS = (libs: string[]) => {
   writeFileSync(path.join(__dirname, "../bin/index.d.ts"), (libs.map(l => `import "./${l}"`).join("\n") + JSXDeclaration), { encoding: "UTF-8" })
 }
 
-const ui5_host = "openui5.hana.ondemand.com"
-
-const formatApiRefURL = (lib: Library) => `https://${ui5_host}/test-resources/${lib.name.replace(/\./g, "/")}/designtime/apiref/api.json`
+const formatApiRefURL = (base = "https://openui5.hana.ondemand.com/") => (lib: Library) => `${base}test-resources/${lib.name.replace(/\./g, "/")}/designtime/apiref/api.json`
 
 // MAIN process
 if (require.main === module) {
 
   (
     async () => {
-      const response = await fetch(`https://${ui5_host}/resources/sap-ui-version.json`);
+      const response = await fetch(`https://openui5.hana.ondemand.com/resources/sap-ui-version.json`);
       const version: Ui5DistVersion = await response.json()
       const libraries = version.libraries.filter(l => !l.name.startsWith("themelib") && l.name != "sap.ui.server.java")
       console.log(`Building ui5 type definition with version: ${version.version}`)
 
-      const dtsBuilder = buildTypeDefinitions(await getDocumentBase(version.version))
-      await Promise.all(libraries.map(formatApiRefURL).map(url => fetch(url).then(res => res.json()).then(dtsBuilder).catch(console.error)))
+      const documentBase = await getDocumentBase(version.version)
+
+      const dtsBuilder = buildTypeDefinitions(documentBase)
+
+      await Promise.all(libraries.map(formatApiRefURL(documentBase)).map(url => fetch(url).then(res => res.json()).then(dtsBuilder).catch(console.error)))
+      
       writeIndexDTS(libraries.map(library => library.name))
 
     }
