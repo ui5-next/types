@@ -10,7 +10,8 @@
     "build": "ts-node ./builder/builder && npm run test",
     "test": "jest && tsc --noEmit",
     "test:cov": "npm run test && codecov",
-    "publish:tag": "npm run build && npm publish --access public --tag latest"
+    "publish:tag": "npm run build && npm publish --access public --tag latest",
+    "coverage": "npm test -- --coverage --no-cache"
   },
   "repository": {
     "type": "git",
@@ -28,12 +29,21 @@
     "testRegex": "builder/.*?__tests__/.*_test\\.ts$",
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!**/node_modules/**"
+    ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "testconfig.js",
       "package.json",
       "package-lock.json",
       "tsconfig.json"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
     ]
   },
   "homepage": "https://github.com/ui5-next/types#readme",

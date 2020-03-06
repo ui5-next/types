@@ -1,6 +1,8 @@
 import { UI5Symbol } from "./types";
 import { forEach, trimEnd, trimStart } from "lodash";
 import { NotExistedTypes } from "./not_existed_type";
+import { extractGeneric } from "./formatter";
+import { secureSplit } from "./utils";
 
 export const analysisDependencies = (s: UI5Symbol): string[] => {
   const rt = new Set<string>()
@@ -8,25 +10,33 @@ export const analysisDependencies = (s: UI5Symbol): string[] => {
   const addToSet = (mName: string = "", set: Set<string>) => {
     mName = trimStart(mName, "module:")
     mName = trimEnd(mName, "[]")
+    mName = mName.replace("module:", "")
+    mName = mName.replace("sap.ui.fl.Utils.FakePromise", "Promise")
     mName = mName.replace("Promise.", "Promise")
     mName = mName.replace("Array.", "Array")
-    mName = mName.replace(/\./g, "/")
+    mName = mName.replace("Object.", "Map")
+    mName = mName.replace(/[\{\}\(\)]/g, "")
 
-    if (mName && mName.startsWith("Promise<") && (!mName.startsWith("Promise|"))) {
-      const regResult = /Promise\<(.*?)\>/.exec(mName);
-      if (regResult) {
-        addToSet(regResult[1], set)
-      } else {
-        addToSet(mName, rt)
+    const generic = extractGeneric(mName)
+
+    if (generic) { // is generic
+
+      const { inner } = generic;
+
+      addToSet(inner, set)
+
+    } else { // is plain ref
+
+      const parts1 = secureSplit(mName, ",")
+      const parts2 = secureSplit(mName, "|")
+      if (parts1.length > 1) {
+        parts1.forEach(c => addToSet(c, set))
+      } else if (parts2.length > 1) {
+        parts2.forEach(c => addToSet(c, set))
+      } else if (mName.startsWith("sap") && !NotExistedTypes.includes(mName.replace(/\//g, "."))) {
+        set.add(mName)
       }
-    } else {
-      if (mName.indexOf("|") > 0) {
-        mName.split("|").forEach(v => addToSet(v, set))
-      } else {
-        if (mName.startsWith("sap") && !NotExistedTypes.includes(mName.replace(/\//g, "."))) {
-          set.add(trimEnd(mName, ">")) // trim unexpected end '<'
-        }
-      }
+
     }
 
   }
@@ -60,24 +70,24 @@ export const analysisDependencies = (s: UI5Symbol): string[] => {
     })
   }
 
-  var m = s["ui5-metadata"]
+  var mName = s["ui5-metadata"]
 
-  if (m) {
+  if (mName) {
 
-    if (m.properties) {
-      forEach(m.properties, p => {
+    if (mName.properties) {
+      forEach(mName.properties, p => {
         addToSet(p.type, rt)
       })
     }
 
-    if (m.aggregations) {
-      forEach(m.aggregations, a => {
+    if (mName.aggregations) {
+      forEach(mName.aggregations, a => {
         addToSet(a.type, rt)
       })
     }
 
-    if (m.associations) {
-      forEach(m.associations, a => {
+    if (mName.associations) {
+      forEach(mName.associations, a => {
         addToSet(a.type, rt)
       })
     }
@@ -90,5 +100,5 @@ export const analysisDependencies = (s: UI5Symbol): string[] => {
     })
   }
 
-  return Array.from(rt)
+  return Array.from(new Set(Array.from(rt).map(s => s.replace(/\./g, "/").replace(/[\<\>\(\)]/g, ""))))
 }

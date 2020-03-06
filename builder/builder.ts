@@ -3,8 +3,10 @@ import { UI5APIRef, Kind, Stereotype } from './types';
 import { writeFileSync } from "fs";
 import * as path from "path";
 import { formatClassString, formatEnumString, formatTypeString, formatNsType, formatInterfaceString, formatNsClassString, formatPureNsNode, formatFunctionString } from './formatter';
+import { isEmpty } from "lodash";
 import * as fetch from "node-fetch";
 import { Ui5DistVersion, Library } from './ui5_dist_types';
+import { NotExistedTypes } from './not_existed_type';
 
 const replaceLinkBase = (content = "", newBase = "") => {
   return content

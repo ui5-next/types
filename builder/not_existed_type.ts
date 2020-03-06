@@ -9,7 +9,7 @@ export const NotExistedTypes = [
   "sap.m.P13nConditionOperation",
   "DomRef",
   "iScroll",
-  "sap.ui.fl.Change",
+
   "sap.ui.integration.CardActionType",
   "sap.ui.commons.form.SimpleFormLayout",
   "sap.ui.core.dnd.DragSession",
@@ -20,9 +20,7 @@ export const NotExistedTypes = [
   "sap.ui.comp.smartvariants.SmartVariantManagement",
   "sap.ui.commons.TitleLevel",
   "sap.m.LigthBox",
-  "sap.ui.fl.Utils.FakePromise.<(sap.ui.core.Element",
-  "sap.ui.fl.Utils.FakePromise<(sap.ui.core.Element",
-  "sap.m.MessagePopoverItem)",
-  "sap.m.GroupHeaderListItem)",
-  "sap.ui.core.ComponentContainer)"
+  "sap.ui.fl.Layer",
+
+  "sap.ui.fl.write._internal.transport.TransportDialog"
 ];

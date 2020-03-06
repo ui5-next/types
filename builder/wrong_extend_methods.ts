@@ -25,6 +25,7 @@ export const skipMethods = [
   "bindContext",
   "bindList",
   "fireChange",
+  "getRootContexts",
   "setSelectedIndex",
   "setSelectionInterval",
   "setEnableGrouping",

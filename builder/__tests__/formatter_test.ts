@@ -11,11 +11,11 @@ const moduleParsingFixtures = [
   },
   {
     s: "Array.<Object.<string,any>>",
-    e: "Array<Map<string,any>>"
+    e: "Array<Map<string, any>>"
   },
   {
     s: "Object.<string,any>",
-    e: "Map<string,any>"
+    e: "Map<string, any>"
   },
   {
     s: "module:sap/base/i18n/ResourceBundle",
@@ -24,7 +24,11 @@ const moduleParsingFixtures = [
   {
     s: "module:sap/base/i18n/ResourceBundle|Promise.<module:sap/base/i18n/ResourceBundle>",
     e: "ImportedSapBaseI18nResourceBundle | Promise<ImportedSapBaseI18nResourceBundle>"
-  }
+  },
+  {
+    s: "Array.<{type:string,index:int}>",
+    e: "Array<{type:string,index:number}>"
+  },
 ]
 
 describe('format module name test suite', () => {
@@ -42,6 +46,8 @@ describe('format module name test suite', () => {
 
     expect(extractGeneric("Promise<boolean>")).toStrictEqual({ generic: "Promise", inner: "boolean" })
     expect(extractGeneric("Array<string>")).toStrictEqual({ generic: "Array", inner: "string" })
+    expect(extractGeneric("Promise<(sap.ui.core.Element|false)>")).toStrictEqual({ generic: "Promise", inner: "sap.ui.core.Element|false" })
+
     expect(extractGeneric("Array")).toBeNull()
     expect(extractGeneric("module:sap/base/i18n/ResourceBundle|Promise.<module:sap/base/i18n/ResourceBundle>")).toBeNull()
 

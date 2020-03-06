@@ -8,6 +8,7 @@ import { analysisDependencies } from './dependencies';
 import { upperFirst, trimStart, trimEnd, } from "lodash";
 import { NotExistedTypes } from './not_existed_type';
 import { skipMethods } from './wrong_extend_methods';
+import { secureSplit } from './utils';
 
 const turnDownService = new TurnDownService()
 
@@ -102,93 +103,102 @@ export const formatModuleName = (m = "") => {
     m = m.replace("Array.", "Array")
     m = m.replace("Object.", "Map")
 
-    const generic = extractGeneric(m)
+    switch (m) {
 
-    console.log(m)
-
-    if (NotExistedTypes.includes(m.replace(/\//g, "."))) {
-        return "any"
-    } else if (generic) {
-        const { inner } = generic;
-        const g2 = extractGeneric(inner) // inner is pure generic type
-
-        if (g2) {
-            return `${generic.generic}<${formatModuleName(inner)}>`
-        } else {
-            return `${generic.generic}<${formatModuleName(generic.inner.split(",").map(p => p.trim()).map(formatModuleName).join(","))}>`
-        }
-    } else if (m.startsWith("(") && m.endsWith(")")) {
-        return formatModuleName(m.substr(1, m.length - 2))
-    } else if (m.indexOf("|") > 0) {
-        return m.split("|").map(formatModuleName).join(" | ")
-    } else if (m.startsWith("jQuery")) {
-        return "any"
-    } else if (m.endsWith("[]")) {
-        return `${formatModuleName(trimEnd(m, "[]"))}[]`
-    } else if (m.startsWith("sap")) {
-        return `Imported${m.split(/\.|\//g).map(upperFirst).join("")}`
-    } else {
-        switch (m) {
-            case "int":
-            case "float":
-                return "number"
-            case "bject[]":
-                return "object[]"
-            case "bject":
-                return "object"
-            case "Promise":
-                return "Promise<any>"
-            case "Promise<function(>":
-                return "Promise<Function>"
-            case "ndefined":
-                return "undefined";
-            case "function":
-            case "function()":
-                return "Function"
-            case "array":
-            case "Array":
-                return "Array<any>"
-            case "ManageObject":
-                return formatModuleName("sap.ui.base.ManagedObject")
-            case "ControlSelector":
-                return formatModuleName("sap.ui.test.RecordReplay.ControlSelector")
-            case "UploadSetItem":
-                return formatModuleName("sap.m.upload.UploadSetItem")
-            case "UploadSet":
-                return formatModuleName("sap.m.upload.UploadSet")
-            case "sap/ui/core/ComponentContainer)":
-            case "sap.ui.core.ComponentContainer)":
-                return formatModuleName("sap.ui.core.ComponentContainer")
-            case "int[]":
-            case "float[]":
-                return "number[]"
-            case "List":
-            case "Item":
-            case "Uploader":
-            case "FileUploader":
-            case "ap":
-            case "*":
-            case "DOMRef":
-            case "T":
-            case "Ref":
-            case "DomNode":
-            case "LayoutHistory":
+        case "int":
+        case "float":
+        case "Infinity":
+            return "number"
+        case "bject[]":
+            return "object[]"
+        case "bject":
+            return "object"
+        case "Promise":
+            return "Promise<any>"
+        case "Promise<function(>":
+            return "Promise<Function>"
+        case "ndefined":
+            return "undefined";
+        case "function":
+        case "function(":
+        case "function()":
+            return "Function"
+        case "array":
+        case "Array":
+            return "Array<any>"
+        case "Array<{type:string,index:int}>":
+            return "Array<{type:string,index:number}>"
+        case "ManageObject":
+            return formatModuleName("sap.ui.base.ManagedObject")
+        case "ControlSelector":
+            return formatModuleName("sap.ui.test.RecordReplay.ControlSelector")
+        case "UploadSetItem":
+            return formatModuleName("sap.m.upload.UploadSetItem")
+        case "UploadSet":
+            return formatModuleName("sap.m.upload.UploadSet")
+        case "sap/ui/core/ComponentContainer)":
+        case "sap.ui.core.ComponentContainer)":
+            return formatModuleName("sap.ui.core.ComponentContainer")
+        case "int[]":
+        case "float[]":
+            return "number[]"
+        case "List":
+        case "Item":
+        case "Uploader":
+        case "FileUploader":
+        case "ap":
+        case "*":
+        case "DOMRef":
+        case "T":
+        case "Ref":
+        case "DomNode":
+        case "LayoutHistory":
+            return "any"
+        case "Map":
+        case "Map<any>":
+            return "Map<any, any>"
+        case "Iterator":
+            return "Iterator<any>"
+        default:
+            if (NotExistedTypes.includes(m.replace(/\//g, "."))) {
                 return "any"
-            case "Map":
-            case "Map<any>":
-                return "Map<any, any>"
-            case "Object.<string,function()>":
-                return "Map<string, Function>"
-            case "Object.<string,string>":
-                return "Map<string, string>"
-            case "Iterator":
-                return "Iterator<any>"
-            case "{type:string,index:int}":
-                return "{ type: string, index: number }"
-            default:
+            }
+
+            const generic = extractGeneric(m)
+
+            if (generic) {
+
+                const { inner } = generic;
+
+                const parts1 = secureSplit(inner, ",")
+
+                if (parts1.length > 1) {
+                    return `${generic.generic}<${formatModuleName(parts1.map(p => p.trim()).map(formatModuleName).join(", "))}>`
+                }
+
+                const parts2 = secureSplit(inner, "|")
+
+                if (parts2.length > 1) {
+                    return `${generic.generic}<${formatModuleName(parts2.map(p => p.trim()).map(formatModuleName).join(" | "))}>`
+                }
+
+                return `${generic.generic}<${formatModuleName(inner)}>`
+
+            } else if (m.startsWith("(") && m.endsWith(")")) {
+                return formatModuleName(m.substr(1, m.length - 2))
+            } else if (m.indexOf("|") > 0) {
+                return secureSplit(m, "|").map(formatModuleName).join(" | ")
+            } else if (m.startsWith("jQuery")) {
+                return "any"
+            } else if (m.endsWith("[]")) {
+                return `${formatModuleName(trimEnd(m, "[]"))}[]`
+            } else if (m.startsWith("sap")) {
+                return `Imported${trimEnd(m, ")").split(/\.|\//g).map(upperFirst).join("")}`
+            } else {
                 return m
-        }
+            }
     }
+
 }
 
 Handlebars.registerHelper("formatModuleName", formatModuleName)
@@ -412,6 +422,10 @@ export const formatClassString = (s: UI5Symbol) => {
         delete s.extends
     }
 
+    // it extends from not existed type, remove it
+    if (NotExistedTypes.includes(s.extends)) {
+        delete s.extends
+    }
 
     if (s.methods) {
         s.methods = s.methods.filter(m => !((s.basename != "Object") && m.name.endsWith("getMetadata")))
