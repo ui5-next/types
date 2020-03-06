@@ -45,7 +45,7 @@ const getDocumentBase = async (version = "") => {
 
 }
 
-export const buildTypeDefinitions = (docLinkBase = "https://openui5.hana.ondemand.com/") => (ref: UI5APIRef) => {
+export const buildTypeDefinitions = (docLinkBase = "https://openui5.hana.ondemand.com/") => (defineResourceUrl = "") => (ref: UI5APIRef) => {
 
   console.log(`Building type definition for ${ref.library}`)
 
@@ -57,7 +57,9 @@ export const buildTypeDefinitions = (docLinkBase = "https://openui5.hana.ondeman
 
   typeString += `// Library: ${ref.library}\n`
 
-  typeString += `/// <reference path="./base.d.ts" />`
+  typeString += `// Link: ${defineResourceUrl}\n`
+
+  typeString += `/// <reference path="./base.d.ts" />\n`
 
   ref.symbols.forEach(s => {
     switch (s.kind) {
@@ -128,8 +130,8 @@ if (require.main === module) {
 
       const dtsBuilder = buildTypeDefinitions(documentBase)
 
-      await Promise.all(libraries.map(formatApiRefURL(documentBase)).map(url => fetch(url).then(res => res.json()).then(dtsBuilder).catch(console.error)))
-      
+      await Promise.all(libraries.map(formatApiRefURL(documentBase)).map(url => fetch(url).then(res => res.json()).then(dtsBuilder(url)).catch(console.error)))
+
       writeIndexDTS(libraries.map(library => library.name))
 
     }

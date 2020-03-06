@@ -1,4 +1,5 @@
-declare module '{{formatNameSpaceToModule name}}'{
+
+declare module '{{formatNameSpaceToModule name}}' {
   /**
     * {{{formatDescription description}}}
     {{#if href}}* @see [document](https://openui5.hana.ondemand.com/{{href}}{{/if}})

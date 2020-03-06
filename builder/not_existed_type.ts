@@ -19,5 +19,10 @@ export const NotExistedTypes = [
   "sap.ui.layout.ResponsiveSplitterPage",
   "sap.ui.comp.smartvariants.SmartVariantManagement",
   "sap.ui.commons.TitleLevel",
-  "sap.m.LigthBox"
+  "sap.m.LigthBox",
+  "sap.ui.fl.Utils.FakePromise.<(sap.ui.core.Element",
+  "sap.ui.fl.Utils.FakePromise<(sap.ui.core.Element",
+  "sap.m.MessagePopoverItem)",
+  "sap.m.GroupHeaderListItem)",
+  "sap.ui.core.ComponentContainer)"
 ];

@@ -73,37 +73,52 @@ const formatDescription = (d: string, resource = "https://openui5.hana.ondemand.
 
 Handlebars.registerHelper("formatDescription", formatDescription)
 
-const formatModuleName = (m: string) => {
+export const extractGeneric = (s = "") => {
+    const r = /^([a-zA-Z]*?)<\(?(.*?)\)?\>$/g
+    const a = r.exec(s)
+    if (a) {
+        const generic = a[1]
+        const inner = a[2]
+        if (s.startsWith(`${generic}<`)) {
+            return {
+                generic,
+                inner
+            }
+        } else {
+            return null
+        }
+
+    } else {
+        return null
+    }
+}
+
+export const formatModuleName = (m = "") => {
 
     m = m.trim()
-    m = trimStart(m, "module:")
+    m = m.replace("module:", "")
+    m = m.replace("sap.ui.fl.Utils.FakePromise", "Promise")
     m = m.replace("Promise.", "Promise")
     m = m.replace("Array.", "Array")
     m = m.replace("Object.", "Map")
 
+    const generic = extractGeneric(m)
+
+    console.log(m)
+
     if (NotExistedTypes.includes(m.replace(/\//g, "."))) {
         return "any"
-    } else if (m.startsWith("Promise<")) {
-        const regResult = /Promise\<(.*?)\>/.exec(m);
-        if (regResult) {
-            return `Promise<${formatModuleName(regResult[1])}>`
+    } else if (generic) {
+        const { inner } = generic;
+        const g2 = extractGeneric(inner) // inner is pure generic type
+
+        if (g2) {
+            return `${generic.generic}<${formatModuleName(inner)}>`
         } else {
-            return "Promise<any>"
+            return `${generic.generic}<${formatModuleName(generic.inner.split(",").map(p => p.trim()).map(formatModuleName).join(","))}>`
         }
-    } else if (m.startsWith("Array<")) {
-        const regResult = /Array\<(.*?)\>/.exec(m);
-        if (regResult) {
-            return `Array<${formatModuleName(regResult[1])}>`
-        } else {
-            return "Array<any>"
-        }
-    } else if (m.startsWith("Map<")) {
-        const regResult = /Map\<(.*?)\>/.exec(m);
-        if (regResult) {
-            return `Map<${regResult[1].split(",").map(p => p.trim()).map(formatModuleName).join(",")}>`
-        } else {
-            return "Map<any, any>"
-        }
+    } else if (m.startsWith("(") && m.endsWith(")")) {
+        return formatModuleName(m.substr(1, m.length - 2))
     } else if (m.indexOf("|") > 0) {
         return m.split("|").map(formatModuleName).join(" | ")
     } else if (m.startsWith("jQuery")) {
@@ -123,6 +138,8 @@ const formatModuleName = (m: string) => {
                 return "object"
             case "Promise":
                 return "Promise<any>"
+            case "Promise<function(>":
+                return "Promise<Function>"
             case "ndefined":
                 return "undefined";
             case "function":
@@ -157,8 +174,6 @@ const formatModuleName = (m: string) => {
             case "DomNode":
             case "LayoutHistory":
                 return "any"
-            case "function()":
-                return "Function"
             case "Map":
             case "Map<any>":
                 return "Map<any, any>"
