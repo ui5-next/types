@@ -20,7 +20,7 @@ jobs:
       run: |
         npm ci
         npm run build
-        npm run coverage
+        npm run test
       env:
         CI: true
     - name: upload coverage

@@ -8,10 +8,8 @@
   "scripts": {
     "release": "standard-version --commit-all --no-verify && git push --follow-tags origin master",
     "build": "ts-node ./builder/builder && npm run test",
-    "test": "jest && tsc --noEmit",
-    "test:cov": "npm run test && codecov",
-    "publish:tag": "npm run build && npm publish --access public --tag latest",
-    "coverage": "npm test -- --coverage --no-cache"
+    "test": "jest --coverage && tsc --noEmit",
+    "publish:tag": "npm run build && npm publish --access public --tag latest"
   },
   "repository": {
     "type": "git",
