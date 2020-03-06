@@ -28,7 +28,7 @@
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.ts",
+      "builder/**/*.ts",
       "!**/node_modules/**"
     ],
     "coveragePathIgnorePatterns": [
