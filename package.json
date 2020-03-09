@@ -38,19 +38,21 @@
       "package-lock.json",
       "tsconfig.json"
     ],
+    "transformIgnorePatterns": [
+      "resources"
+    ],
     "moduleFileExtensions": [
       "ts",
-      "js",
-      "json"
+      "js"
     ]
   },
   "homepage": "https://github.com/ui5-next/types#readme",
   "devDependencies": {
-    "@types/handlebars": "^4.1.0",
+    "@types/handlebars": "^4",
     "@types/jest": "^25",
-    "@types/lodash": "^4.14.123",
-    "@types/node": "^11.11.3",
-    "handlebars": "^4.5.3",
+    "@types/lodash": "^4",
+    "@types/node": "^11",
+    "handlebars": "^4",
     "jest": "^25",
     "lodash": "^4",
     "node-fetch": "^2",

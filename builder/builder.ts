@@ -3,10 +3,8 @@ import { UI5APIRef, Kind, Stereotype } from './types';
 import { writeFileSync } from "fs";
 import * as path from "path";
 import { formatClassString, formatEnumString, formatTypeString, formatNsType, formatInterfaceString, formatNsClassString, formatPureNsNode, formatFunctionString } from './formatter';
-import { isEmpty } from "lodash";
 import * as fetch from "node-fetch";
 import { Ui5DistVersion, Library } from './ui5_dist_types';
-import { NotExistedTypes } from './not_existed_type';
 
 const replaceLinkBase = (content = "", newBase = "") => {
   return content
@@ -132,7 +130,15 @@ if (require.main === module) {
 
       const dtsBuilder = buildTypeDefinitions(documentBase)
 
-      await Promise.all(libraries.map(formatApiRefURL(documentBase)).map(url => fetch(url).then(res => res.json()).then(dtsBuilder(url)).catch(console.error)))
+      await Promise
+        .all(
+          libraries.map(formatApiRefURL(documentBase)).map(
+            url => fetch(url)
+              .then(res => res.json())
+              .then(dtsBuilder(url))
+              .catch(console.error)
+          )
+        )
 
       writeIndexDTS(libraries.map(library => library.name))
 
