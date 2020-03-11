@@ -79,10 +79,25 @@ export const buildTypeDefinitions = (docLinkBase = "https://openui5.hana.ondeman
         } else if (s.basename && s.export && s.visibility == "public" && s.basename == s.export) {
           typeString += formatEnumString(s)
         } else if (s.methods) {
-          typeString += formatNsClassString(s);
+          if (s.name != "sap") {
+            if (s.name == "sap.ui") {
+              if (ref.library == "sap.ui.core") {
+                typeString += formatNsClassString(s);
+              }
+            } else {
+              typeString += formatNsClassString(s);
+            }
+          }
         } else {
-          // name space or empty
-          typeString += formatPureNsNode(s);
+          if (s.name != "sap") {
+            if (s.name == "sap.ui") {
+              if (ref.library == "sap.ui.core") {
+                typeString += formatPureNsNode(s);
+              }
+            } else {
+              typeString += formatPureNsNode(s);
+            }
+          }
         }
         break;
       case Kind.Interface:
