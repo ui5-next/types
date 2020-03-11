@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.16](https://github.com/ui5-next/types/compare/v1.4.15...v1.4.16) (2020-03-11)
+
+
+### Bug Fixes
+
+* doc ([279e304](https://github.com/ui5-next/types/commit/279e3046f5044c6df13ac82b7d3e8cb09a94c251))
+* duplicate namespace 'sap.ui' ([e1b0dca](https://github.com/ui5-next/types/commit/e1b0dca658d89569f4be051454285701d66c1872))
+
 ### [1.4.15](https://github.com/ui5-next/types/compare/v1.4.14...v1.4.15) (2020-03-06)
 
 
