@@ -21,6 +21,8 @@ export const NotExistedTypes = [
   "sap.ui.commons.TitleLevel",
   "sap.m.LigthBox",
   "sap.ui.fl.Layer",
-
-  "sap.ui.fl.write._internal.transport.TransportDialog"
+  "sap.ui.core.util.reflection.FlexDelegateInfo",
+  "sap.ui.core.ManagedObject",
+  "sap.ui.fl.write._internal.transport.TransportDialog",
+  "sap.ui.fl.descriptorRelated.api.DescriptorInlineChange"
 ];
