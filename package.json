@@ -51,7 +51,7 @@
     "@types/handlebars": "^4",
     "@types/jest": "^25",
     "@types/lodash": "^4",
-    "@types/node": "^11",
+    "@types/node": "^14",
     "handlebars": "^4",
     "jest": "^25",
     "lodash": "^4",
