@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.17](https://github.com/ui5-next/types/compare/v1.4.16...v1.4.17) (2020-06-10)
+
+
+### Bug Fixes
+
+* openui5 1.78 type issues ([3a4043f](https://github.com/ui5-next/types/commit/3a4043fcf8a19361259a9c83eb2f873d63c0730a))
+
 ### [1.4.16](https://github.com/ui5-next/types/compare/v1.4.15...v1.4.16) (2020-03-11)
 
 
