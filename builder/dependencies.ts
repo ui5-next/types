@@ -1,15 +1,18 @@
 import { UI5Symbol } from "./types";
-import { forEach, trimEnd, trimStart } from "lodash";
 import { NotExistedTypes } from "./not_existed_type";
 import { extractGeneric } from "./formatter";
 import { secureSplit } from "./utils";
+import { trimPrefix } from "@newdash/newdash-node/trimPrefix";
+import { trimSuffix } from "@newdash/newdash-node/trimSuffix";
+import forEach from "@newdash/newdash-node/forEach";
+
 
 export const analysisDependencies = (s: UI5Symbol): string[] => {
   const rt = new Set<string>()
 
   const addToSet = (mName: string = "", set: Set<string>) => {
-    mName = trimStart(mName, "module:")
-    mName = trimEnd(mName, "[]")
+    mName = trimPrefix(mName, "module:")
+    mName = trimSuffix(mName, "[]")
     mName = mName.replace("module:", "")
     mName = mName.replace("sap.ui.fl.Utils.FakePromise", "Promise")
     mName = mName.replace("Promise.", "Promise")

@@ -1,7 +1,6 @@
 import { readFileSync } from "fs";
 import * as path from "path";
 import { UI5APIRef, UI5Symbol, Kind } from '../types';
-import { find } from "lodash";
 import { formatClassString } from "../formatter";
 
 

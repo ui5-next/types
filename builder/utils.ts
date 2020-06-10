@@ -1,4 +1,6 @@
-import { indexOf, lastIndexOf } from "lodash";
+
+import indexOf from "@newdash/newdash-node/indexOf";
+
 
 export const cutByIndexArray = (s = "", a = []) => {
   const rt = []
@@ -21,6 +23,7 @@ export const secureSplit = (s = "", delimiter = ",") => {
   while ((i = indexOf(s, delimiter, i + 1)) != -1) {
     if (cuts.length >= 1) {
       const beforeCut = cuts[cuts.length - 1]
+      // @ts-ignore
       if (indexOf(s.slice(beforeCut + 1, i), "<")) {
         continue
       }

@@ -5,10 +5,14 @@ import * as path from "path";
 import * as Handlebars from "handlebars";
 import * as TurnDownService from "turndown";
 import { analysisDependencies } from './dependencies';
-import { upperFirst, trimStart, trimEnd, } from "lodash";
 import { NotExistedTypes } from './not_existed_type';
 import { skipMethods } from './wrong_extend_methods';
 import { secureSplit } from './utils';
+
+import upperFirst from "@newdash/newdash-node/upperFirst";
+
+import { trimPrefix } from "@newdash/newdash-node/trimPrefix";
+import { trimSuffix } from "@newdash/newdash-node/trimSuffix";
 
 const turnDownService = new TurnDownService()
 
@@ -30,7 +34,7 @@ const templates = {
 }
 
 Handlebars.registerHelper("formatNameSpaceToModule", (m: string) => {
-    return trimStart(m, "module:").replace(/\./g, "/")
+    return trimPrefix(m, "module:").replace(/\./g, "/")
 })
 
 Handlebars.registerHelper("extractImportClassName", (m: string) => {
@@ -191,9 +195,10 @@ export const formatModuleName = (m = "") => {
             } else if (m.startsWith("jQuery")) {
                 return "any"
             } else if (m.endsWith("[]")) {
-                return `${formatModuleName(trimEnd(m, "[]"))}[]`
+                return `${formatModuleName(trimSuffix(m, "[]"))}[]`
             } else if (m.startsWith("sap")) {
-                return `Imported${trimEnd(m, ")").split(/\.|\//g).map(upperFirst).join("")}`
+                // @ts-ignore
+                return `Imported${trimSuffix(m, ")").split(/\.|\//g).map(upperFirst).join("")}`
             } else {
                 return m
             }
