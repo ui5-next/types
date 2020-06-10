@@ -55,7 +55,7 @@
     "handlebars": "^4",
     "jest": "^25",
     "node-fetch": "^2",
-    "standard-version": "^7",
+    "standard-version": "^8",
     "ts-jest": "^25",
     "ts-loader": "^7",
     "ts-node": "^8",
