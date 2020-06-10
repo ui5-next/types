@@ -1,6 +1,16 @@
 name: Node CI
 
-on: push
+on: 
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  # daily 01:00 AM
+  schedule:
+    - cron: '0 1 * * *'
+
 jobs:
   build:
 
@@ -8,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 13.x]
+        node-version: [10.x, 12.x, 14.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -16,6 +26,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
     - name: npm install, build, and test
       run: |
         npm ci
@@ -23,6 +42,7 @@ jobs:
         npm run test
       env:
         CI: true
+
     - name: upload coverage
       uses: codecov/codecov-action@v1
       with: 
