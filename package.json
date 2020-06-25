@@ -50,7 +50,7 @@
   "devDependencies": {
     "@newdash/newdash-node": "^5.5.0",
     "@types/handlebars": "^4",
-    "@types/jest": "^25",
+    "@types/jest": "^26",
     "@types/node": "^11",
     "handlebars": "^4",
     "jest": "^25",
