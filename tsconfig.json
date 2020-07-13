@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "newLine": "LF",
-        "charset": "UTF-8",
+        "charset": "utf8",
         "resolveJsonModule": true,
         "jsx": "preserve"
     },

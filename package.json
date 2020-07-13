@@ -51,7 +51,7 @@
     "@newdash/newdash-node": "^5.5.0",
     "@types/handlebars": "^4",
     "@types/jest": "^26",
-    "@types/node": "^11",
+    "@types/node": "^14",
     "handlebars": "^4",
     "jest": "^25",
     "node-fetch": "^2",

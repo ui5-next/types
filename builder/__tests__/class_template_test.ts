@@ -8,7 +8,7 @@ describe('class template test group', () => {
 
   const jsViewSymbolString = readFileSync(
     path.join(__dirname, "./class_js_view.json"),
-    { encoding: "UTF-8" }
+    { encoding: "utf8" }
   )
 
   const jsViewSymbol: UI5Symbol = JSON.parse(jsViewSymbolString)

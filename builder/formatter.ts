@@ -17,7 +17,7 @@ import { trimSuffix } from "@newdash/newdash-node/trimSuffix";
 const turnDownService = new TurnDownService()
 
 const loadTemplate = (p: string) => Handlebars.compile(
-    readFileSync(path.join(__dirname, p), { encoding: "UTF-8" })
+    readFileSync(path.join(__dirname, p), { encoding: "utf8"  })
 )
 
 /**
