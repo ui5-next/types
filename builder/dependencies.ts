@@ -2,9 +2,9 @@ import { UI5Symbol } from "./types";
 import { NotExistedTypes } from "./not_existed_type";
 import { extractGeneric } from "./formatter";
 import { secureSplit } from "./utils";
-import { trimPrefix } from "@newdash/newdash-node/trimPrefix";
-import { trimSuffix } from "@newdash/newdash-node/trimSuffix";
-import forEach from "@newdash/newdash-node/forEach";
+import { trimPrefix } from "@newdash/newdash/trimPrefix";
+import { trimSuffix } from "@newdash/newdash/trimSuffix";
+import forEach from "@newdash/newdash/forEach";
 
 
 export const analysisDependencies = (s: UI5Symbol): string[] => {

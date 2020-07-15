@@ -1,5 +1,5 @@
 
-import indexOf from "@newdash/newdash-node/indexOf";
+import indexOf from "@newdash/newdash/indexOf";
 
 
 export const cutByIndexArray = (s = "", a = []) => {

@@ -9,15 +9,15 @@ import { NotExistedTypes } from './not_existed_type';
 import { skipMethods } from './wrong_extend_methods';
 import { secureSplit } from './utils';
 
-import upperFirst from "@newdash/newdash-node/upperFirst";
+import upperFirst from "@newdash/newdash/upperFirst";
 
-import { trimPrefix } from "@newdash/newdash-node/trimPrefix";
-import { trimSuffix } from "@newdash/newdash-node/trimSuffix";
+import { trimPrefix } from "@newdash/newdash/trimPrefix";
+import { trimSuffix } from "@newdash/newdash/trimSuffix";
 
 const turnDownService = new TurnDownService()
 
 const loadTemplate = (p: string) => Handlebars.compile(
-    readFileSync(path.join(__dirname, p), { encoding: "utf8"  })
+    readFileSync(path.join(__dirname, p), { encoding: "utf8" })
 )
 
 /**
