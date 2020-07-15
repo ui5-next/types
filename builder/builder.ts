@@ -51,6 +51,8 @@ export const buildTypeDefinitions = (docLinkBase = "https://openui5.hana.ondeman
 
   var typeString = ""
 
+  typeString += '// @ts-nocheck\n'
+
   typeString += `// UI5 Version: ${ref.version}\n`
 
   typeString += `// Date: ${new Date().toISOString()}\n`
