@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.18](https://github.com/ui5-next/types/compare/v1.4.17...v1.4.18) (2020-07-15)
+
+
+### Bug Fixes
+
+* types for charset ([567d077](https://github.com/ui5-next/types/commit/567d077d269f2f4110a247a5a6474e2b6657d3ae))
+* ui5 1.80.0 ([8003a51](https://github.com/ui5-next/types/commit/8003a51ffba732abb7a84884355d36c6cf4f8eba))
+
 ### [1.4.17](https://github.com/ui5-next/types/compare/v1.4.16...v1.4.17) (2020-06-10)
 
 
