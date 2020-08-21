@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.19](https://github.com/ui5-next/types/compare/v1.4.18...v1.4.19) (2020-08-21)
+
+
+### Bug Fixes
+
+* type ([cfd5dfe](https://github.com/ui5-next/types/commit/cfd5dfec5d2a2cc834d23ab49e36eb7f869b727d))
+* **deps:** turndown version ([ea7e4be](https://github.com/ui5-next/types/commit/ea7e4bef0c6e623c79e3ca38987e472c573d87ac))
+
 ### [1.4.18](https://github.com/ui5-next/types/compare/v1.4.17...v1.4.18) (2020-07-15)
 
 
