@@ -1,18 +1,18 @@
 
-import { UI5Symbol, Kind, Method, MethodParameter, Ui5Metadata, Stereotype } from './types';
+import { trimPrefix } from "@newdash/newdash/trimPrefix";
+import { trimSuffix } from "@newdash/newdash/trimSuffix";
+import upperFirst from "@newdash/newdash/upperFirst";
 import { readFileSync } from "fs";
-import * as path from "path";
 import * as Handlebars from "handlebars";
+import * as path from "path";
 import * as TurnDownService from "turndown";
 import { analysisDependencies } from './dependencies';
 import { NotExistedTypes } from './not_existed_type';
-import { skipMethods } from './wrong_extend_methods';
+import { MethodParameter, Stereotype, UI5Symbol } from './types';
 import { secureSplit } from './utils';
+import { skipMethods } from './wrong_extend_methods';
 
-import upperFirst from "@newdash/newdash/upperFirst";
 
-import { trimPrefix } from "@newdash/newdash/trimPrefix";
-import { trimSuffix } from "@newdash/newdash/trimSuffix";
 
 const turnDownService = new TurnDownService()
 
@@ -117,6 +117,9 @@ export const formatModuleName = (m = "") => {
             return "object[]"
         case "bject":
             return "object"
+        case "object<string,string>":
+        case "object<string, string>":
+            return "Record<string, string>"
         case "Promise":
             return "Promise<any>"
         case "Promise<function(>":

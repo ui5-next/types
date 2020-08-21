@@ -9,12 +9,12 @@ describe('class template test group', () => {
   const jsViewSymbolString = readFileSync(
     path.join(__dirname, "./class_js_view.json"),
     { encoding: "utf8" }
-  )
+  );
 
-  const jsViewSymbol: UI5Symbol = JSON.parse(jsViewSymbolString)
+  const jsViewSymbol: UI5Symbol = JSON.parse(jsViewSymbolString);
 
   test('should format class symbol', () => {
-    expect(formatClassString(jsViewSymbol)).toBeTruthy()
+    expect(formatClassString(jsViewSymbol)).toBeTruthy();
   });
 
 });

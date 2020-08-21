@@ -11,8 +11,8 @@ describe('dependencies analysis test suite', () => {
         'sap/ui/core/Control',
         'sap/ui/base/Metadata'
       ]
-    )
-    expect(analysisDependencies(<any>jsViewSymbol)).toEqual(ep)
+    );
+    expect(analysisDependencies(<any>jsViewSymbol)).toEqual(ep);
   });
 
 });

@@ -29,30 +29,30 @@ const moduleParsingFixtures = [
     s: "Array.<{type:string,index:int}>",
     e: "Array<{type:string,index:number}>"
   },
-]
+];
 
 describe('format module name test suite', () => {
 
   it('should fix return types', () => {
 
     moduleParsingFixtures.forEach(({ s, e }) => {
-      expect(formatModuleName(s)).toBe(e)
-    })
+      expect(formatModuleName(s)).toBe(e);
+    });
 
 
   });
 
   it('should check generic type', () => {
 
-    expect(extractGeneric("Promise<boolean>")).toStrictEqual({ generic: "Promise", inner: "boolean" })
-    expect(extractGeneric("Array<string>")).toStrictEqual({ generic: "Array", inner: "string" })
-    expect(extractGeneric("Promise<(sap.ui.core.Element|false)>")).toStrictEqual({ generic: "Promise", inner: "sap.ui.core.Element|false" })
+    expect(extractGeneric("Promise<boolean>")).toStrictEqual({ generic: "Promise", inner: "boolean" });
+    expect(extractGeneric("Array<string>")).toStrictEqual({ generic: "Array", inner: "string" });
+    expect(extractGeneric("Promise<(sap.ui.core.Element|false)>")).toStrictEqual({ generic: "Promise", inner: "sap.ui.core.Element|false" });
 
-    expect(extractGeneric("Array")).toBeNull()
-    expect(extractGeneric("module:sap/base/i18n/ResourceBundle|Promise.<module:sap/base/i18n/ResourceBundle>")).toBeNull()
+    expect(extractGeneric("Array")).toBeNull();
+    expect(extractGeneric("module:sap/base/i18n/ResourceBundle|Promise.<module:sap/base/i18n/ResourceBundle>")).toBeNull();
 
   });
 
-})
+});
 
 
