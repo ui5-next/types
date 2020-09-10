@@ -58,7 +58,7 @@
     "eslint": "^7.7.0",
     "handlebars": "^4.7.6",
     "jest": "^26.4.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.2.0",
     "ts-loader": "^8.0.0",
