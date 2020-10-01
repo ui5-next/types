@@ -60,7 +60,7 @@
     "jest": "^26.4.1",
     "node-fetch": "^2.6.0",
     "standard-version": "^9.0.0",
-    "ts-jest": "^26.2.0",
+    "ts-jest": "^26.4.1",
     "ts-loader": "^8.0.0",
     "ts-node": "^8.10.2",
     "turndown": "^5.0.3",
