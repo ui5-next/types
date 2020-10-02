@@ -36,10 +36,7 @@ Provide ES6 UI5 types definition. To support vscode `Code IntelliSense`.
 * [x] namespace type
 * [x] JSX props support
 * [x] how to document
-
-## to do
-
-* [ ] CI nightly build
+* [x] CI nightly test
 
 ## comments
 
