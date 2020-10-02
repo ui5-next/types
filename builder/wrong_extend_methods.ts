@@ -35,4 +35,4 @@ export const skipMethods = [
   "removeSelectionInterval",
   "sap.ui.core.mvc.XMLView.registerPreprocessor",
   "getFocusDomRef"
-]
+];

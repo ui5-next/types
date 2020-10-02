@@ -1,11 +1,18 @@
 {
     "compilerOptions": {
         "newLine": "LF",
+        "allowJs": true,
+        "target": "ES2015",
+        "module": "CommonJS",
         "charset": "utf8",
-        "resolveJsonModule": true,
-        "jsx": "preserve"
+        "outDir": "lib",
+        "sourceMap": true,
+        "resolveJsonModule": true
     },
     "exclude": [
-        "./builder/templates/*.ts"
+        "builder/__tests__"
+    ],
+    "include": [
+        "builder"
     ]
 }

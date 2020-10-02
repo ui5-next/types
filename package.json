@@ -7,10 +7,12 @@
   "typings": "./bin/index.d.ts",
   "scripts": {
     "release": "standard-version --commit-all --no-verify && git push --follow-tags origin master",
-    "build": "ts-node ./builder/builder && npm run test",
+    "prebuild": "tsc",
+    "build": "node ./lib/builder",
+    "postbuild": "npm run test",
     "lint": "eslint builder/**/*.ts --fix",
     "test": "jest --coverage",
-    "posttest": "tsc --noEmit",
+    "posttest": "tsc -p tsconfig.ui5.type.json --noEmit",
     "publish:tag": "npm run build && npm publish --access public --tag latest"
   },
   "repository": {
@@ -64,7 +66,7 @@
     "ts-jest": "^26.4.1",
     "ts-loader": "^8.0.4",
     "ts-node": "^9.0.0",
-    "turndown": "^6.0.0",
+    "turndown": "^5",
     "typescript": "^4.0.3"
   }
 }

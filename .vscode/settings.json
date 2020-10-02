@@ -3,7 +3,6 @@
   "editor.useTabStops": true,
   "editor.fontSize": 14,
   "editor.wordWrap": "on",
-  "editor.formatOnSave": true,
   "cSpell.ignorePaths": [
     "**/package-lock.json",
     "**/node_modules/**",

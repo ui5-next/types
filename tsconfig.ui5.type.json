@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "newLine": "LF",
+        "charset": "utf8",
+        "resolveJsonModule": true,
+        "jsx": "preserve"
+    }
+}
