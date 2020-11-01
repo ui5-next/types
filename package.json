@@ -64,7 +64,7 @@
     "node-fetch": "^2.6.1",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.4.1",
-    "ts-loader": "^8.0.4",
+    "ts-loader": "^8.0.7",
     "ts-node": "^9.0.0",
     "turndown": "^5",
     "typescript": "^4.0.3"
