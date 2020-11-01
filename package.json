@@ -52,7 +52,7 @@
   },
   "homepage": "https://github.com/ui5-next/types#readme",
   "devDependencies": {
-    "@newdash/newdash": "^5.14.0",
+    "@newdash/newdash": "^5.16.0",
     "@types/handlebars": "^4.1.0",
     "@types/jest": "^26.0.14",
     "@types/node": "^14.11.2",
