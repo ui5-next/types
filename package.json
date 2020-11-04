@@ -11,7 +11,7 @@
     "build": "node ./lib/builder",
     "postbuild": "npm run test",
     "lint": "eslint builder/**/*.ts --fix",
-    "test": "jest --coverage",
+    "test": "jest --coverage --forceExit",
     "posttest": "tsc -p tsconfig.ui5.type.json --noEmit",
     "publish:tag": "npm run build && npm publish --access public --tag latest"
   },
@@ -52,21 +52,21 @@
   },
   "homepage": "https://github.com/ui5-next/types#readme",
   "devDependencies": {
-    "@newdash/newdash": "^5.14.0",
+    "@newdash/newdash": "^5.17.0",
     "@types/handlebars": "^4.1.0",
-    "@types/jest": "^26.0.14",
-    "@types/node": "^14.11.2",
-    "@typescript-eslint/eslint-plugin": "^4.3.0",
-    "@typescript-eslint/parser": "^4.3.0",
-    "eslint": "^7.10.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.6",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "eslint": "^7.12.1",
     "handlebars": "^4.7.6",
-    "jest": "^26.4.2",
+    "jest": "^26.6.2",
     "node-fetch": "^2.6.1",
     "standard-version": "^9.0.0",
-    "ts-jest": "^26.4.1",
-    "ts-loader": "^8.0.4",
+    "ts-jest": "^26.4.3",
+    "ts-loader": "^8.0.7",
     "ts-node": "^9.0.0",
-    "turndown": "^5",
-    "typescript": "^4.0.3"
+    "turndown": "^7.0.0",
+    "typescript": "^4.0.5"
   }
 }
