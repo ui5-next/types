@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.20](https://github.com/ui5-next/types/compare/v1.4.19...v1.4.20) (2021-01-04)
+
+
+### Bug Fixes
+
+* mdc module ([d809f62](https://github.com/ui5-next/types/commit/d809f62a4fb807d47f849c94cfdf42d34b2240da))
+* turndown memory leak ([1935763](https://github.com/ui5-next/types/commit/193576396d68663aa30bf22e76b61ae4cb89bfb1))
+
 ### [1.4.19](https://github.com/ui5-next/types/compare/v1.4.18...v1.4.19) (2020-08-21)
 
 
