@@ -52,21 +52,21 @@
   },
   "homepage": "https://github.com/ui5-next/types#readme",
   "devDependencies": {
-    "@newdash/newdash": "^5.17.0",
+    "@newdash/newdash": "^5.17.1",
     "@types/handlebars": "^4.1.0",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^14.14.6",
-    "@typescript-eslint/eslint-plugin": "^4.6.1",
-    "@typescript-eslint/parser": "^4.6.1",
-    "eslint": "^7.12.1",
+    "@types/jest": "^26.0.19",
+    "@types/node": "^14.14.19",
+    "@typescript-eslint/eslint-plugin": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "eslint": "^7.17.0",
     "handlebars": "^4.7.6",
-    "jest": "^26.6.2",
+    "jest": "^26.6.3",
     "node-fetch": "^2.6.1",
-    "standard-version": "^9.0.0",
-    "ts-jest": "^26.4.3",
-    "ts-loader": "^8.0.7",
-    "ts-node": "^9.0.0",
+    "standard-version": "^9.1.0",
+    "ts-jest": "^26.4.4",
+    "ts-loader": "^8.0.13",
+    "ts-node": "^9.1.1",
     "turndown": "^7.0.0",
-    "typescript": "^4.0.5"
+    "typescript": "^4.1.3"
   }
 }
