@@ -70,7 +70,8 @@ Handlebars.registerHelper("formatDefault", (name: string, cName: string) => {
 
 const formatDescription = (d: string, resource = "https://openui5.hana.ondemand.com/resources/") => {
   try {
-    return turnDownService.turndown(d) || "";
+    const rt = turnDownService.turndown(d) || "";
+    return rt.replace(/\*\//g, '[star mark (*)]/');
   } catch (error) {
     return d;
   }
